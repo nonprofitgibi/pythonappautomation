@@ -5,7 +5,9 @@
 #
 # authors	Kenneth Andrews, Tanner Gibson
 #
-# licence	GPL.V2
+# licence	GNU GENERAL PUBLIC LICENCE v2.0
+#
+# Copyright 2013 Kenneth Andrews, Tanner Gibson
 #..........................................................................................
 import sys
 import urllib
