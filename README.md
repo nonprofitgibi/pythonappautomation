@@ -1,7 +1,10 @@
 Mincraft Server Installation Automation script
 ==============================================
-
+==============================================
 This script downloads, installs, and configures either the vinillia or bukkit minecraft server.
+
+
+
 
 
 mcserver.py is free software: you can redistribute it and/or modify
