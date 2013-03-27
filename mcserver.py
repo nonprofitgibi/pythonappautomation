@@ -7,19 +7,28 @@
 #
 # licence	GPL.V2
 #..........................................................................................
+import sys
+import urllib
 
 print "Minecraft Server install script"
 
-print "would you like to install Minecraft Server?"
-
 install = raw_input ("would you like to install minecraft server? (y)es (n)o: ")
-#if yes continue, if no close
+if install == ("n"):
+	sys.exit()
 
 print "Vannillia is the origional Server straight from minecraft.net, Bukkit is oriented towards modders. if you are unsure choose vanilla"
 server_type = raw_input ("Which version would you like to download? 1-2: ")
 
-#if user chose vanillia download from minecraft.net
-#if user chose Bukkit download from Bukkit.org
+if server_type == ("1"):
+	url = ("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar")
+if server_type == ("2"):
+	url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
+
+source = urllib.urlopen(url).read()
+filename = ("mcserver.jar")
+file = open(filename,'w')
+file.write(source)
+file.close()
 
 #check to see if Java is installed
 	#if no install java
@@ -27,8 +36,8 @@ server_type = raw_input ("Which version would you like to download? 1-2: ")
 admin = raw_input("Name of Admin?: ")
 
 print "If you are unsure of whitelist choose no"
-whitelist = raw_input("enable whitelist?")
-	if yes
+whitelist = raw_input("enable whitelist?: ")
+#	if yes
 	#ask for user input - names for white list
 
 monsters = raw_input("enable monsters?: ")
@@ -89,7 +98,6 @@ view = raw_input("view distance?: ")
 #create desktop shortcut with icon to startup script
 
 start_server = raw_input("Would you like to start your server now? (y)es (n)o: ")
-	if yes
-	start startup script
+#	if yes
+#	start startup script
 
-exit
