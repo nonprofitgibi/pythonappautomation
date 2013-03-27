@@ -1,7 +1,7 @@
 Mincraft Server Installation Automation script
 ==============================================
-==============================================
-This script downloads, installs, and configures either the vinillia or bukkit minecraft server.
+
+##This script downloads, installs, and configures either the vinillia or bukkit minecraft server.
 
 
 
