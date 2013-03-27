@@ -5,9 +5,7 @@
 #
 # authors	Kenneth Andrews, Tanner Gibson
 #
-# licence	GNU GENERAL PUBLIC LICENCE v2.0
-#
-# Copyright 2013 Kenneth Andrews, Tanner Gibson
+# licence	GPL.V2
 #..........................................................................................
 import sys
 import urllib
@@ -33,14 +31,18 @@ file.write(source)
 file.close()
 
 #check to see if Java is installed
+	#if no warn user that java must be up to date and installed on computer to run ask if user wants to run java installer
 	#if no install java
+	
 
 admin = raw_input("Name of Admin?: ")
 
 print "If you are unsure of whitelist choose no"
-whitelist = raw_input("enable whitelist?: ")
+whitelist = raw_input("enable whitelist?: (y)es (n)o ")
 #	if yes
 	#ask for user input - names for white list
+if whitelist==("y")
+	whitelist_names = raw_input("User names of whitelisted players. serparate players with ','")
 
 monsters = raw_input("enable monsters?: ")
 
