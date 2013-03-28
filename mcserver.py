@@ -36,13 +36,34 @@ file.close()
 java = raw_input("Would you like the script to try and automatically install java?: ")
 if java == ("y"):
 	if sys.platform == ("win32"):
-                #install windows java
-		pass
+		java = raw_input ("Your system has Been detected as Windows. are you sure you want to downlad java?: ")
+		if java == ("y"):
+			url = ("http://javadl.sun.com/webapps/download/AutoDL?BundleId=75259")
+			source = urllib.urlopen(url).read()
+			filename = ("java.exe")
+			file = open(filename,'w')
+			file.write(source)
+			file.close()
+
+		elif java == ("n"):
+			pass
+		
 	elif sys.platform == ("linux") or sys.platform == ("linux2"):
-		#install linux java
-		pass
+		java = raw_input ("your System has been detected as Linux. are you sure you want to download java?: ")
+		if java == ("y"):
+			url = ("http://javadl.sun.com/webapps/download/AutoDL?BundleId=75250")
+			source=urllib.urlopen(url).read()
+			filename = ("java.tar.gz")
+			file = open(filename, 'w')
+			file.write(source)
+			file.close(
+				)
+		elif java == ("n"):
+			pass
+
 	else:
 		print ("Sorry, the script was unable to detect your operating system. please install java manually.")
+	
 else:
 	pass
 
