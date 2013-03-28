@@ -21,7 +21,7 @@ if install == ("n"):
 print "Vannillia is the origional Server straight from minecraft.net, Bukkit is oriented towards modders. if you are unsure choose vanilla"
 server_type = raw_input ("Which version would you like to download? 1-2: ")
 
-if server_type == ("1"):
+if server_type == ("1"): #Downloads Minecraft Server file based on users choice
 	url = ("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar")
 if server_type == ("2"):
 	url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
@@ -35,7 +35,7 @@ file.close()
 
 java = raw_input("Would you like the script to try and automatically install java?: ")
 if java == ("y"):
-	if sys.platform == ("win32"):
+	if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
 		java = raw_input ("Your system has Been detected as Windows. are you sure you want to downlad java?: ")
 		if java == ("y"):
 			url = ("http://javadl.sun.com/webapps/download/AutoDL?BundleId=75259")
@@ -48,7 +48,7 @@ if java == ("y"):
 		elif java == ("n"):
 			pass
 		
-	elif sys.platform == ("linux") or sys.platform == ("linux2"):
+	elif sys.platform == ("linux") or sys.platform == ("linux2"): #If OS is detected as Linux downloads java.tar.gz
 		java = raw_input ("your System has been detected as Linux. are you sure you want to download java?: ")
 		if java == ("y"):
 			url = ("http://javadl.sun.com/webapps/download/AutoDL?BundleId=75250")
@@ -78,63 +78,47 @@ if whitelist == ("true"):
 
 elif whitelist == ("false"):
 	pass
-#it might be a good idea to give them options rather than just asking because if they answer with yes or no rather that true false it wont work
-monsters = raw_input("enable monsters?: ")
 
-animals = raw_input("spawn animals?: ")
-
-npc = raw_input("spawn NPCs?: ")
-
-structures = raw_input("generate structures?: ")
-
-pvp = raw_input("enable pvp?: ")
-
-print "Only disable this option if you will be playing without internet"
-online = raw_input("enable online mode?: ")
-
-print "if a character dies their banned from the server"
-hardcore = raw_input("enable hardcore mode?: ")
-
-print "if not sure set to 25565"
-port = raw_input("port number?: ")
-
-print "disable if not sure"
-rcon = raw_input("enable rcon?: ")
-
-print "used for generating maps, if unsure leave blank"
-seed = raw_input("map seed?: ")
-
-print "URL link for Texture pack download, if unsure leave blank"
-texture = raw_input("texture pack?: ")
-
-print "if unsure disable"
-query = raw_input("enable query?: ")
-
-print "(1.survival) (2.creative)"
-gamemode = raw_input("gamemode?: ")
-
-print "(1.easy) (2.normal) (3.hard)"
-difficulty = raw_input("difficulty? 1-3")
-
-print "Message to apear on server list"
-motd = raw_input("MODT?: ")
-
-print "reccomended 256"
-build = raw_input("build height?: ")
-
-print "(1.default) (2.flatland) default reccomended"
-Map_type = raw_input("map type? 1-2: ")
-
-print "if not sure leave blank"
-generator_settings = raw_input("generator settings?: ")
-
-print "reccomended 10"
-view = raw_input("view distance?: ")
-
-nether = raw_input("allow nether (true), (false)?: ")
-
-flight= raw_input("allow flight?: ")
-
+print ("The rest of the settings are optional. if you choose no they will be set to defaults")
+options = raw_input("would you like to change the default settings? (Y)es (N)o: ")
+if options == ("t"):
+	monsters = raw_input("enable monsters?: ")
+	animals = raw_input("spawn animals?: ")
+	npc = raw_input("spawn NPCs?: ")
+	structures = raw_input("generate structures?: ")
+	pvp = raw_input("enable pvp?: ")
+	print "Only disable this option if you will be playing without internet"
+	online = raw_input("enable online mode?: ")
+	print "if a character dies their banned from the server"
+	hardcore = raw_input("enable hardcore mode?: ")
+	print "if not sure set to 25565"
+	port = raw_input("port number?: ")
+	print "disable if not sure"
+	rcon = raw_input("enable rcon?: ")
+	print "used for generating maps, if unsure leave blank"
+	seed = raw_input("map seed?: ")
+	print "URL link for Texture pack download, if unsure leave blank"
+	texture = raw_input("texture pack?: ")
+	print "if unsure disable"	
+	query = raw_input("enable query?: ")
+	print "(1.survival) (2.creative)"
+	gamemode = raw_input("gamemode?: ")
+	print "(1.easy) (2.normal) (3.hard)"
+	difficulty = raw_input("difficulty? 1-3")
+	print "Message to apear on server list"
+	motd = raw_input("MODT?: ")
+	print "reccomended 256"
+	build = raw_input("build height?: ")
+	print "(1.default) (2.flatland) default reccomended"
+	Map_type = raw_input("map type? 1-2: ")
+	print "if not sure leave blank"
+	generator_settings = raw_input("generator settings?: ")
+	print "reccomended 10"
+	view = raw_input("view distance?: ")
+	nether = raw_input("allow nether (true), (false)?: ")
+	flight= raw_input("allow flight?: ")
+else:
+	pass
 #write to file ./server.properties & ./whitelist & ./op
 #whitelist goes to whitelist file
 #admin goes to op file
