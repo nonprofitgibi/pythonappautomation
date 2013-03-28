@@ -107,5 +107,5 @@ view = raw_input("view distance?: ")
 
 start_server = raw_input("Would you like to start your server now? (y)es (n)o: ")
 #	if yes
-#	start startup script
+#		start startup script
 
