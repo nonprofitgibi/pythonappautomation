@@ -71,14 +71,14 @@ admin = raw_input("Name of Admin?: ")
 
 
 print "If you are unsure of whitelist choose no"
-whitelist = raw_input("enable whitelist?: (y)es (n)o ")
+whitelist = raw_input("enable whitelist?: (true) (false): ")
 
-if whitelist == ("y"):
-	whitelist_names = raw_input("User names of whitelisted players. serparate players with ','")
+if whitelist == ("true"):
+	whitelist_names = raw_input("User names of whitelisted players. serparate players with ',': ")
 
-elif whitelist == ("n"):
+elif whitelist == ("false"):
 	pass
-
+#it might be a good idea to give them options rather than just asking because if they answer with yes or no rather that true false it wont work
 monsters = raw_input("enable monsters?: ")
 
 animals = raw_input("spawn animals?: ")
@@ -131,7 +131,48 @@ generator_settings = raw_input("generator settings?: ")
 print "reccomended 10"
 view = raw_input("view distance?: ")
 
+nether = raw_input("allow nether (true), (false)?: ")
+
+flight= raw_input("allow flight?: ")
+
 #write to file ./server.properties & ./whitelist & ./op
+#whitelist goes to whitelist file
+#admin goes to op file
+#all others go to server properties file
+#server properties file
+#	print "''
+#		generator_settings=%s
+#		allow-nether=%s
+#		level-name=world
+#		enable-query=%s
+#		allow-flight=%s
+#		server-port=%s
+#		query.port=%s
+#		level-type=%s
+#		enable-rcon=%s
+#		level-seed=%s
+#		server-ip=%s
+#		max-build-height=%s
+#		spawn-ncps=%s
+#		white-list=%s
+#		debug=%s
+#		spawn-animals=%s
+#		texture-pack=%s
+#		snooper-enabled=%s
+#		hardcore=%s
+#		online-mode=%s
+#		pvp=%s
+#		difficulty=%s
+#		gamemode=%s
+#		max-players=%s
+#		spawn-monsters=%s
+#		generate-structures=%s
+#		view-distance=%s
+#		spawn-protection=%s
+#		motd=%s
+#""" %(generator_settings, nether, query, flight, port, portQ, Map_type, rcon, seed, ip, max_build_heigth,
+#ncp, whitelist, debug, animals, texture_pack, snooper, hardcore, online_mode, pvp difficulty,
+#gamemode, max_players, monsters, structures, view, protection, motd)
 
 #create batch/bash script in server directory to start server
 #create desktop shortcut with icon to startup script
