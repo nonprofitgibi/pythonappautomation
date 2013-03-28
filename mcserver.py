@@ -5,7 +5,9 @@
 #
 # authors	Kenneth Andrews, Tanner Gibson
 #
-# licence	GPL.V2
+# licence	Gnu General Public License v2.0
+#
+# Copyright	2013 Kenneth Andrews, Tanner Gibson
 #..........................................................................................
 import sys
 import urllib
@@ -30,17 +32,19 @@ file = open(filename,'w')
 file.write(source)
 file.close()
 
-#check to see if Java is installed
-	#if no warn user that java must be up to date and installed on computer to run ask if user wants to run java installer
-	#if no install java
-	
+java = raw_input("Would you like the script to try and automatically install java?: ")
+if java == ("y"):
+	if sys.platform == ("win32"):
+		#install windows java
+	elif sys.platform == ("linux") or sys.platform == ("linux2"):
+		#install linux java
+	else:
+		print ("Sorry, the script was unable to detect your operating system. please install java manually.")
 
 admin = raw_input("Name of Admin?: ")
 
 print "If you are unsure of whitelist choose no"
 whitelist = raw_input("enable whitelist?: (y)es (n)o ")
-#	if yes
-	#ask for user input - names for white list
 if whitelist==("y")
 	whitelist_names = raw_input("User names of whitelisted players. serparate players with ','")
 
