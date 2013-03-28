@@ -32,21 +32,31 @@ file = open(filename,'w')
 file.write(source)
 file.close()
 
+
 java = raw_input("Would you like the script to try and automatically install java?: ")
 if java == ("y"):
 	if sys.platform == ("win32"):
-		#install windows java
+                #install windows java
+		pass
 	elif sys.platform == ("linux") or sys.platform == ("linux2"):
 		#install linux java
+		pass
 	else:
 		print ("Sorry, the script was unable to detect your operating system. please install java manually.")
+else:
+	pass
 
 admin = raw_input("Name of Admin?: ")
 
+
 print "If you are unsure of whitelist choose no"
 whitelist = raw_input("enable whitelist?: (y)es (n)o ")
-if whitelist==("y")
+
+if whitelist == ("y"):
 	whitelist_names = raw_input("User names of whitelisted players. serparate players with ','")
+
+elif whitelist == ("n"):
+	pass
 
 monsters = raw_input("enable monsters?: ")
 
