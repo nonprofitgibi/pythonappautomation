@@ -44,26 +44,33 @@ if java == ("y"):
 			file = open(filename,'w')
 			file.write(source)
 			file.close()
-
+		
 		elif java == ("n"):
 			pass
-		
+
 	elif sys.platform == ("linux") or sys.platform == ("linux2"): #If OS is detected as Linux downloads java.tar.gz
-		java = raw_input ("your System has been detected as Linux. are you sure you want to download java?: ")
+		java = raw_input ("your System has been detected as Linux. It is reccomended that you install java manually through your distro's repository. would you like to continue?: ")
 		if java == ("y"):
 			url = ("http://javadl.sun.com/webapps/download/AutoDL?BundleId=75250")
 			source=urllib.urlopen(url).read()
 			filename = ("java.tar.gz")
 			file = open(filename, 'w')
 			file.write(source)
-			file.close(
-				)
+			file.close()
+		
 		elif java == ("n"):
 			pass
 
 	else:
 		print ("Sorry, the script was unable to detect your operating system. please install java manually.")
-	
+
+#	check for platform again, and decide how to install java based on sys.platform
+#	if sys.platform == ("win32"):
+#		install .\java.exe
+
+#	elif sys.platform == ("linux") or sys.platform == ("linux2"):
+#		extract, and install ./java.tar.gz
+
 else:
 	pass
 
@@ -81,7 +88,7 @@ elif whitelist == ("false"):
 
 print ("The rest of the settings are optional. if you choose no they will be set to defaults")
 options = raw_input("would you like to change the default settings? (Y)es (N)o: ")
-if options == ("t"):
+if options == ("y"):
 	monsters = raw_input("enable monsters?: ")
 	animals = raw_input("spawn animals?: ")
 	npc = raw_input("spawn NPCs?: ")
@@ -119,6 +126,15 @@ if options == ("t"):
 	flight= raw_input("allow flight?: ")
 else:
 	pass
+
+
+#if user decided to change default values then write them to server.properties if not ignore.
+#if options == ("y"):
+	#write all changes to file
+
+#else:
+#	write only admin, and whitelist to file
+
 #write to file ./server.properties & ./whitelist & ./op
 #whitelist goes to whitelist file
 #admin goes to op file
