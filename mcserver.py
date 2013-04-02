@@ -11,7 +11,11 @@
 #..........................................................................................
 import sys
 import urllib
+from sys import argv
 
+script, server= argv
+
+serverproperties= open(server, 'w')
 print "Minecraft Server install script"
 
 install = raw_input ("would you like to install minecraft server? (y)es (n)o: ")
@@ -87,7 +91,7 @@ elif whitelist == ("false"):
 	pass
 
 print ("The rest of the settings are optional. if you choose no they will be set to defaults")
-options = raw_input("would you like to change the default settings? (Y)es (N)o: ")
+options = raw_input("would you like to change the default settings? (y)es (n)o: ")
 if options == ("y"):
 	monsters = raw_input("enable monsters?: ")
 	animals = raw_input("spawn animals?: ")
@@ -110,8 +114,8 @@ if options == ("y"):
 	query = raw_input("enable query?: ")
 	print "(1.survival) (2.creative)"
 	gamemode = raw_input("gamemode?: ")
-	print "(1.easy) (2.normal) (3.hard)"
-	difficulty = raw_input("difficulty? 1-3")
+	print "(0.peacefull)(1.easy) (2.normal) (3.hard)"
+	difficulty = raw_input("difficulty? 0-3: ")
 	print "Message to apear on server list"
 	motd = raw_input("MODT?: ")
 	print "reccomended 256"
@@ -124,6 +128,11 @@ if options == ("y"):
 	view = raw_input("view distance?: ")
 	nether = raw_input("allow nether (true), (false)?: ")
 	flight= raw_input("allow flight?: ")
+	print "Now this one is a hard one if unknown google how to find it we are working on how to find server ip address"
+	ip= raw_input("server ip: ")
+	debug= raw_input("debugging: ")
+	snooper= raw_input("snooper setting: ")
+	max_players= raw_input("max player: ")
 else:
 	pass
 
@@ -131,6 +140,41 @@ else:
 #if user decided to change default values then write them to server.properties if not ignore.
 #if options == ("y"):
 	#write all changes to file
+server_props = ("""
+generator_settings=%s
+allow-nether=%s
+level-name=world
+enable-query=%s
+allow-flight=%s
+server-port=%s
+query.port=%s
+evel-type=%s
+enable-rcon=%s
+level-seed=%s
+server-ip=%s
+max-build-height=%s
+spawn-ncps=%s
+white-list=%s
+debug=%s
+spawn-animals=%s
+texture-pack=%s
+snooper-enabled=%s
+hardcore=%s
+online-mode=%s
+pvp=%s
+difficulty=%s
+gamemode=%s
+max-players=%s
+spawn-monsters=%s
+generate-structures=%s
+view-distance=%s
+spawn-protection=false
+motd=%s
+"""%(generator_settings, nether, query, flight, port, port, Map_type, rcon, seed, ip, build,
+npc, whitelist, debug, animals, texture, snooper, hardcore, online, pvp, difficulty,
+gamemode, max_players, monsters, structures, view, motd))
+print server_props
+serverproperties.write(server_props)
 
 #else:
 #	write only admin, and whitelist to file
