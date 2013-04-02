@@ -11,11 +11,7 @@
 #..........................................................................................
 import sys
 import urllib
-from sys import argv
 
-script, server= argv
-
-serverproperties= open(server, 'w')
 print "Minecraft Server install script"
 
 install = raw_input ("would you like to install minecraft server? (y)es (n)o: ")
@@ -173,50 +169,11 @@ motd=%s
 """%(generator_settings, nether, query, flight, port, port, Map_type, rcon, seed, ip, build,
 npc, whitelist, debug, animals, texture, snooper, hardcore, online, pvp, difficulty,
 gamemode, max_players, monsters, structures, view, motd))
-print server_props
-serverproperties.write(server_props)
 
-#else:
-#	write only admin, and whitelist to file
-
-#write to file ./server.properties & ./whitelist & ./op
-#whitelist goes to whitelist file
-#admin goes to op file
-#all others go to server properties file
-#server properties file
-#	print "''
-#		generator_settings=%s
-#		allow-nether=%s
-#		level-name=world
-#		enable-query=%s
-#		allow-flight=%s
-#		server-port=%s
-#		query.port=%s
-#		level-type=%s
-#		enable-rcon=%s
-#		level-seed=%s
-#		server-ip=%s
-#		max-build-height=%s
-#		spawn-ncps=%s
-#		white-list=%s
-#		debug=%s
-#		spawn-animals=%s
-#		texture-pack=%s
-#		snooper-enabled=%s
-#		hardcore=%s
-#		online-mode=%s
-#		pvp=%s
-#		difficulty=%s
-#		gamemode=%s
-#		max-players=%s
-#		spawn-monsters=%s
-#		generate-structures=%s
-#		view-distance=%s
-#		spawn-protection=%s
-#		motd=%s
-#""" %(generator_settings, nether, query, flight, port, portQ, Map_type, rcon, seed, ip, max_build_heigth,
-#ncp, whitelist, debug, animals, texture_pack, snooper, hardcore, online_mode, pvp difficulty,
-#gamemode, max_players, monsters, structures, view, protection, motd)
+filename = ("server.properties")
+target = open(filename, 'w')
+target.write(server_props)
+target.close
 
 #create batch/bash script in server directory to start server
 #create desktop shortcut with icon to startup script
