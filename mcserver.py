@@ -20,9 +20,10 @@ if install == ("n"):
 
 print "Vannillia is the origional Server straight from minecraft.net, Bukkit is oriented towards modders. if you are unsure choose vanilla"
 server_type = raw_input ("Which version would you like to download? 1-2: ")
-
+#for some reason this doesn't quite work in widows and I don't know why. It gets named the wrong thing and gets an error as corrupt jar file working on fixing it.
 if server_type == ("1"): #Downloads Minecraft Server file based on users choice
 	url = ("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar")
+	
 if server_type == ("2"):
 	url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
 
