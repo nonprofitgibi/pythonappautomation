@@ -20,7 +20,7 @@ if install == ("n"):
 
 print "Vannillia is the origional Server straight from minecraft.net, Bukkit is oriented towards modders. if you are unsure choose vanilla"
 server_type = raw_input ("Which version would you like to download? 1-2: ")
-#for some reason this doesn't quite work in widows and I don't know why. It gets named the wrong thing and gets an error as corrupt jar file working on fixing it.
+
 if server_type == ("1"): #Downloads Minecraft Server file based on users choice
 	url = ("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar")
 	
@@ -76,7 +76,6 @@ else:
 	pass
 
 admin = raw_input("Name of Admin?: ")
-
 
 print "If you are unsure of whitelist choose no"
 whitelist = raw_input("enable whitelist?: (true) (false): ")
@@ -137,8 +136,7 @@ else:
 #if user decided to change default values then write them to server.properties if not ignore.
 #if options == ("y"):
 	#write all changes to file
-server_props = ("""
-generator_settings=%s
+server_props = ("""generator_settings=%s
 allow-nether=%s
 level-name=world
 enable-query=%s
