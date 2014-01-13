@@ -29,14 +29,8 @@ if server_type == ("1"): #Downloads Minecraft Server file based on users choice
 if server_type == ("2"):
         url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
 
-##source = urllib.urlopen(url).read()
-##filename = ("mcserver.jar")
-##file = open(filename,'w')
-##file.write(source)
-##file.close()
-
 #This method of downloading the server works quite well. Implement it for other downloads.
-file_name = url.split('/')[-1]
+file_name = "mcserver.jar"
 u = urllib2.urlopen(url)
 f = open(file_name, 'wb')
 meta = u.info()
@@ -58,7 +52,7 @@ while True:
 
 f.close()
 
-java = raw_input("Would you like the script to try and automatically install java? (y/n): ")
+java = raw_input("Would you like the script to download java? (y/n): ")
 if java == ("y"):
         if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
                 java = raw_input ("Your system has Been detected as Windows. are you sure you want to downlad java?: ")
@@ -289,9 +283,19 @@ target.write(server_props)
 target.close
 
 #create batch/bash script in server directory to start server
+batch = "java -Xms512M -Xmx1G -jar mcserver.jar"
+filename = ("start-server.bat")
+target = open(filename, 'w')
+target.write(batch)
+target.close
+
+
 #create desktop shortcut with icon to startup script
 
+#get python to run the batch file
+#               The following is me testing to see if I can get python to start the server.
 start_server = raw_input("Would you like to start your server now? (y)es (n)o: ")
-#       if yes
-#               start startup script
+if start_server == ("y"):
+        import subprocess
 
+        p = subprocess.Popen('start-server.bat', creationflags=subprocess.CREATE_NEW_CONSOLE)

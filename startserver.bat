@@ -1,1 +1,0 @@
-java -Xms512M -Xmx1G -jar minecraft_server.1.7.4.jar
