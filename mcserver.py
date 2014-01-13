@@ -294,8 +294,8 @@ target.close
 
 #get python to run the batch file
 #               The following is me testing to see if I can get python to start the server.
-start_server = raw_input("Would you like to start your server now? (y)es (n)o: ")
-if start_server == ("y"):
-        import subprocess
-
-        p = subprocess.Popen('start-server.bat', creationflags=subprocess.CREATE_NEW_CONSOLE)
+##start_server = raw_input("Would you like to start your server now? (y)es (n)o: ")
+##if start_server == ("y"):
+##        import subprocess
+##
+##        p = subprocess.Popen('start-server.bat', creationflags=subprocess.CREATE_NEW_CONSOLE)
