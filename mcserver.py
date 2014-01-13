@@ -248,13 +248,15 @@ target = open(filename, 'w')
 target.write(server_props)
 target.close
 
-#create batch/bash script in server directory to start server
-batch = "java -Xms512M -Xmx1G -jar mcserver.jar"
-filename = ("start-server.bat")
-target = open(filename, 'w')
-target.write(batch)
-target.close
 
+if sys.platform == ("win32"):
+        #create batch/bash script in server directory to start server
+        batch = "java -Xms512M -Xmx1G -jar mcserver.jar"
+        filename = ("start-server.bat")
+        target = open(filename, 'w')
+        target.write(batch)
+        target.close
+        
 print "The program has finished setting up your server!"
 
 
