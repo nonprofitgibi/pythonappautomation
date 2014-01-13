@@ -90,6 +90,7 @@ elif whitelist == ("false"):
 
 print ("The rest of the settings are optional. if you choose no they will be set to defaults")
 options = raw_input("would you like to change the default settings? (y)es (n)o: ")
+
 if options == ("y"):
 	monsters = raw_input("enable monsters?: ")
 	animals = raw_input("spawn animals?: ")
@@ -132,7 +133,64 @@ if options == ("y"):
 	snooper= raw_input("snooper setting: ")
 	max_players= raw_input("max player: ")
 else:
-	pass
+        ##Default Minecraft server properties via http://minecraft.gamepedia.com/Server.properties as of 1/12/14
+##        generator_settings=
+##        op-permission-level=4
+##        level-name=world
+##        enable-query=false
+##        allow-flight=false
+##        announce-player-achievements=true
+##        server-port=25565
+##        level-type=DEFAULT
+##        enable-rcon=false
+##        level-seed=
+##        force-gamemode=false
+##        server-ip=
+##        max-build-height=256
+##        spawn-npcs=true
+##        white-list=false
+##        spawn-animals=true
+##        hardcore=false
+##        snooper-enabled=true
+##        online-mode=true
+##        resource-pack=
+##        pvp=true
+##        difficulty=1
+##        enable-command-block=false
+##        gamemode=0
+##        player-idle-timeout=0
+##        max_players=20
+##        spawn-monsters=true
+##        generate-structures=true
+##        view-distance=10
+##        motd=A Minecraft Server
+        ##Generates values for default set 
+        monsters = "true"
+        animals = "true"
+        npc = "true"
+        structures = "true"
+        pvp = "true"
+        online = "true"
+        hardcore = "false"
+        port = "25565"
+        rcon = "false"
+        seed = ""
+        texture =""
+        query = "false"
+        gamemode = "0"
+        difficulty = "1"
+        motd = "Auto Generated Minecraft Server"
+        build = "256"
+        Map_type = "1"
+        generator_settings = ""
+        view = "10"
+        nether = "true"
+        flight= "false"
+        print "Now this one is a hard one if unknown google how to find it we are working on how to find server ip address"
+        ip= raw_input("server ip: ")
+        debug= ""
+        snooper= "true"
+        max_players= "20"      
 
 
 #if user decided to change default values then write them to server.properties if not ignore.
