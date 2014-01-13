@@ -19,12 +19,12 @@ if install == ("n"):
 	sys.exit()
 print "Choose the server version you would like to install..."
 print "1. Vanilla\n2. Bukkit"
-print "Vanillia is the origional Server straight from minecraft.net,\n Bukkit is oriented towards modders. If you are unsure choose vanilla."
+print "Vanillia is the origional Server straight from minecraft.net,\nBukkit is oriented towards modders. If you are unsure choose vanilla."
 
 server_type = raw_input ("Which version would you like to download? (1 or 2): ")
 
 if server_type == ("1"): #Downloads Minecraft Server file based on users choice
-	url = ("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar")
+	url = ("https://s3.amazonaws.com/Minecraft.Download/versions/1.7.4/minecraft_server.1.7.4.jar")
 	
 if server_type == ("2"):
 	url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")

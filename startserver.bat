@@ -1,1 +1,1 @@
-java -Xms512M -Xmx1G -jar minecraft_server.jar -d64
+java -Xms512M -Xmx1G -jar mcserver.jar
