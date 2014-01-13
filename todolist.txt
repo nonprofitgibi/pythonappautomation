@@ -1,0 +1,19 @@
+todo list
+todo list format
+
+(solved/unsolved) thing that needs to be done/comment
+who is working on it, who else is working on it, ect
+questions about the problem, add lines tabbed or spaced in if needed
+  like so?
+anything else
+
+(unsolved)Though this will be one of the last things I would like to see an actual gui that is very user friendly
+
+(unsolved)I need to study some python and java
+
+(unsolved)possibly bring this over to a java file, a little more power and flexabile.
+
+(unsolved)mac
+not me
+I don't quite know what isn't working on mac I've never worked with mac (nor do I have one) so I would like figure this out
+
