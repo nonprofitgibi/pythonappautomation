@@ -10,14 +10,14 @@
 # Copyright	2013 Kenneth Andrews, Tanner Gibson
 #..........................................................................................
 import sys
-import urllib
+import urllib2
 
 print "Minecraft Server install script"
 
 install = raw_input ("would you like to install minecraft server? (y)es (n)o: ")
 if install == ("n"):
 	sys.exit()
-print "Choose the server version you would like to install..."
+print "Choose the server version you would like to download, and wait for the download to finish..."
 print "1. Vanilla\n2. Bukkit"
 print "Vanillia is the origional Server straight from minecraft.net,\nBukkit is oriented towards modders. If you are unsure choose vanilla."
 
@@ -29,12 +29,34 @@ if server_type == ("1"): #Downloads Minecraft Server file based on users choice
 if server_type == ("2"):
 	url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
 
-source = urllib.urlopen(url).read()
-filename = ("mcserver.jar")
-file = open(filename,'w')
-file.write(source)
-file.close()
+##source = urllib.urlopen(url).read()
+##filename = ("mcserver.jar")
+##file = open(filename,'w')
+##file.write(source)
+##file.close()
 
+#This method of downloading the server works quite well. Implement it for other downloads.
+file_name = url.split('/')[-1]
+u = urllib2.urlopen(url)
+f = open(file_name, 'wb')
+meta = u.info()
+file_size = int(meta.getheaders("Content-Length")[0])
+print "Downloading: %s Bytes: %s" % (file_name, file_size)
+
+file_size_dl = 0
+block_sz = 8192
+while True:
+    buffer = u.read(block_sz)
+    if not buffer:
+        break
+
+    file_size_dl += len(buffer)
+    f.write(buffer)
+    status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
+    print status
+    print ""
+
+f.close()
 
 java = raw_input("Would you like the script to try and automatically install java? (y/n): ")
 if java == ("y"):
