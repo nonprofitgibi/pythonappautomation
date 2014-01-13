@@ -17,9 +17,11 @@ print "Minecraft Server install script"
 install = raw_input ("would you like to install minecraft server? (y)es (n)o: ")
 if install == ("n"):
 	sys.exit()
+print "Choose the server version you would like to install..."
+print "1. Vanilla\n2. Bukkit"
+print "Vanillia is the origional Server straight from minecraft.net,\n Bukkit is oriented towards modders. If you are unsure choose vanilla."
 
-print "Vannillia is the origional Server straight from minecraft.net, Bukkit is oriented towards modders. if you are unsure choose vanilla"
-server_type = raw_input ("Which version would you like to download? 1-2: ")
+server_type = raw_input ("Which version would you like to download? (1 or 2): ")
 
 if server_type == ("1"): #Downloads Minecraft Server file based on users choice
 	url = ("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar")
@@ -34,7 +36,7 @@ file.write(source)
 file.close()
 
 
-java = raw_input("Would you like the script to try and automatically install java?: ")
+java = raw_input("Would you like the script to try and automatically install java? (y/n): ")
 if java == ("y"):
 	if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
 		java = raw_input ("Your system has Been detected as Windows. are you sure you want to downlad java?: ")
