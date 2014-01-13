@@ -3,14 +3,37 @@
 #
 # description   Script to automate the installation of a minecraft server, and Java
 #
-# authors       Kenneth Andrews, Tanner Gibson
+# authors       Kenneth Andrews, Tanner Gibson, Fredrick Paulin
 #
 # licence       Gnu General Public License v2.0
 #
-# Copyright     2013 Kenneth Andrews, Tanner Gibson
+# Copyright     2014 Kenneth Andrews, Tanner Gibson, Fredrick Paulin
 #..........................................................................................
 import sys
 import urllib2
+
+def downloader(url):
+        u = urllib2.urlopen(url)
+        f = open(file_name, 'wb')
+        meta = u.info()
+        file_size = int(meta.getheaders("Content-Length")[0])
+        print "Downloading: %s Bytes: %s" % (file_name, file_size)
+
+        file_size_dl = 0
+        block_sz = 8192
+        while True:
+            buffer = u.read(block_sz)
+            if not buffer:
+                break
+
+            file_size_dl += len(buffer)
+            f.write(buffer)
+            status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
+            print status
+            print ""
+
+        f.close()
+        
 
 print "Minecraft Server install script"
 
@@ -31,26 +54,7 @@ if server_type == ("2"):
 
 #This method of downloading the server works quite well. Implement it for other downloads.
 file_name = "mcserver.jar"
-u = urllib2.urlopen(url)
-f = open(file_name, 'wb')
-meta = u.info()
-file_size = int(meta.getheaders("Content-Length")[0])
-print "Downloading: %s Bytes: %s" % (file_name, file_size)
-
-file_size_dl = 0
-block_sz = 8192
-while True:
-    buffer = u.read(block_sz)
-    if not buffer:
-        break
-
-    file_size_dl += len(buffer)
-    f.write(buffer)
-    status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
-    print status
-    print ""
-
-f.close()
+downloader(url)
 
 java = raw_input("Would you like the script to download java? (y/n): ")
 if java == ("y"):
@@ -58,27 +62,7 @@ if java == ("y"):
                 java = raw_input ("Your system has Been detected as Windows. are you sure you want to downlad java?: ")
                 if java == ("y"):
                         url=("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-windows-i586-iftw.exe")
-                        file_name = url.split('/')[-1]
-                        u = urllib2.urlopen(url)
-                        f = open(file_name, 'wb')
-                        meta = u.info()
-                        file_size = int(meta.getheaders("Content-Length")[0])
-                        print "Downloading: %s Bytes: %s" % (file_name, file_size)
-
-                        file_size_dl = 0
-                        block_sz = 8192
-                        while True:
-                            buffer = u.read(block_sz)
-                            if not buffer:
-                                break
-
-                            file_size_dl += len(buffer)
-                            f.write(buffer)
-                            status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
-                            print status
-                            print ""
-
-                        f.close()
+                        downloader(url)
                         
                 elif java == ("n"):
                         pass
@@ -87,26 +71,7 @@ if java == ("y"):
                 java = raw_input ("your System has been detected as Linux. It is reccomended that you install java manually through your distro's repository. would you like to continue?: ")
                 if java == ("y"):
                         url = ("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-linux-i586.tar.gz")
-                        u = urllib2.urlopen(url)
-                        f = open(file_name, 'wb')
-                        meta = u.info()
-                        file_size = int(meta.getheaders("Content-Length")[0])
-                        print "Downloading: %s Bytes: %s" % (file_name, file_size)
-
-                        file_size_dl = 0
-                        block_sz = 8192
-                        while True:
-                            buffer = u.read(block_sz)
-                            if not buffer:
-                                break
-
-                            file_size_dl += len(buffer)
-                            f.write(buffer)
-                            status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
-                            print status
-                            print ""
-
-                        f.close()
+                        downloader(url)
 
                 
                 elif java == ("n"):
@@ -127,7 +92,7 @@ else:
 
 admin = raw_input("Name of Admin?: ")
 
-print "If you are unsure of whitelist choose no"
+print "If you are unsure of whitelist choose 'false'"
 whitelist = raw_input("enable whitelist?: (true) (false): ")
 
 if whitelist == ("true"):
@@ -137,6 +102,9 @@ elif whitelist == ("false"):
         pass
 
 print ("The rest of the settings are optional. if you choose no they will be set to defaults")
+print "Now this one is a hard one if unknown google how to find it we are working on how to find server ip address"
+ip= raw_input("server ip: ")
+
 options = raw_input("would you like to change the default settings? (y)es (n)o: ")
 
 if options == ("y"):
@@ -234,8 +202,6 @@ else:
         view = "10"
         nether = "true"
         flight= "false"
-        print "Now this one is a hard one if unknown google how to find it we are working on how to find server ip address"
-        ip= raw_input("server ip: ")
         debug= ""
         snooper= "true"
         max_players= "20"      
@@ -288,6 +254,9 @@ filename = ("start-server.bat")
 target = open(filename, 'w')
 target.write(batch)
 target.close
+
+print "The program has finished setting up your server!"
+
 
 
 #create desktop shortcut with icon to startup script
