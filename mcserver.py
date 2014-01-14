@@ -9,9 +9,12 @@
 #
 # Copyright     2014 Kenneth Andrews, Tanner Gibson, Fredrick Paulin
 #..........................................................................................
-import sys
-import urllib2
+import sys #for quitting application and looking at operating system
+import socket #to find IP address of the machine
+import urllib2 #for downloading
+import re #for whitelist
 
+#This downloads any file passed in through the variable URL
 def downloader(url):
         u = urllib2.urlopen(url)
         f = open(file_name, 'wb')
@@ -33,44 +36,79 @@ def downloader(url):
             print ""
 
         f.close()
+        finishedDownload = raw_input("Your download has finished, press 'Enter' to continue.")
+
+#This generates a white-list.txt file in the directory for the server software to use. 
+def writeWhitelist():
+        whitelist_names = raw_input("User names of whitelisted players.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
+        whitelistSplit = whitelist_names.split(",")
+        whitelistLen =  len(whitelistSplit)
+        print "The following users are now whitelisted: ", whitelistSplit
+        i=0
+        filename = ("white-list.txt")
+        target = open(filename, 'w')
+        for i in range (0, whitelistLen):
+                target.write("%s\n" % whitelistSplit[i])
+                i+=1
+        target.close
         
 
+#Prompt user to download needed software
 print "Minecraft Server install script"
-
-install = raw_input ("would you like to install minecraft server? (y)es (n)o: ")
+install = raw_input ("Download the minecraft server software? (y)es, (n)o, or any other key to exit: ")
 if install == ("n"):
-        sys.exit()
-print "Choose the server version you would like to download, and wait for the download to finish..."
-print "1. Vanilla\n2. Bukkit"
-print "Vanillia is the origional Server straight from minecraft.net,\nBukkit is oriented towards modders. If you are unsure choose vanilla."
+        pass
+elif install == ("y"):
+        file_name = "mcserver.jar"
+        print "Choose the server version you would like to download, and wait for the download to finish..."
+        print "1. Vanilla\n2. Bukkit"
+        print "Vanillia is the origional Server straight from minecraft.net,\nBukkit is oriented towards modders. If you are unsure choose vanilla."
 
-server_type = raw_input ("Which version would you like to download? (1 or 2): ")
+        server_type = raw_input ("Which version would you like to download? (1 or 2): ")
 
-if server_type == ("1"): #Downloads Minecraft Server file based on users choice
-        url = ("https://s3.amazonaws.com/Minecraft.Download/versions/1.7.4/minecraft_server.1.7.4.jar")
+        if server_type == ("1"): #Downloads Minecraft Server file based on users choice
+                url = ("https://s3.amazonaws.com/Minecraft.Download/versions/1.7.4/minecraft_server.1.7.4.jar")
+                downloader(url)
         
-if server_type == ("2"):
-        url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
+        if server_type == ("2"):
+                url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
+                downloader(url)
+else:
+        sys.exit()
 
-#This method of downloading the server works quite well. Implement it for other downloads.
-file_name = "mcserver.jar"
-downloader(url)
 
-java = raw_input("Would you like the script to download java? (y/n): ")
+#Prompts user to download the most recently available version of java
+        ## We should see if there is a way to automatically detect what version of java they are currently using and see if there is a newer version avilable maybe looking into the Java API would be useful for this
+java = raw_input("Would you like the script to download java? (y)es (n)o: ")
 if java == ("y"):
+        print ("Your system has been detected as %s. It is reccomended that you install Java manually before continuing installation of server." % sys.platform)
+
         if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
-                java = raw_input ("Your system has Been detected as Windows. are you sure you want to downlad java?: ")
-                if java == ("y"):
+                java = raw_input ("Would you like to try to download the current version of Java for %s? (y)es (n)o: " % sys.platform)
+                if java == (""):
                         url=("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-windows-i586-iftw.exe")
+                        file_name = url.split('/')[-1]
                         downloader(url)
                         
                 elif java == ("n"):
                         pass
 
         elif sys.platform == ("linux") or sys.platform == ("linux2"): #If OS is detected as Linux downloads java.tar.gz
-                java = raw_input ("your System has been detected as Linux. It is reccomended that you install java manually through your distro's repository. would you like to continue?: ")
+                java = raw_input ("Would you like to try to download the current version of Java for %s? (y)es (n)o: " % sys.platform)
                 if java == ("y"):
                         url = ("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-linux-i586.tar.gz")
+                        file_name = url.split('/')[-1]
+                        downloader(url)
+
+                
+                elif java == ("n"):
+                        pass
+        elif sys.platform == ("darwin"): #If OS is detected as darwin (Macintosh) downloads java.dmg for mac
+                
+                java = raw_input ("Would you like to try to download the current version of Java for %s? (y)es (n)o: " % sys.platform)
+                if java == ("y"):
+                        url = ("http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jre-7u51-macosx-x64.dmg")
+                        file_name = url.split('/')[-1]
                         downloader(url)
 
                 
@@ -78,8 +116,10 @@ if java == ("y"):
                         pass
 
         else:
-                print ("Sorry, the script was unable to detect your operating system. please install java manually.")
+                print ("Sorry, the script was unable to detect your operating system. Please install java manually by going to: http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html")
 
+
+## I'm working on finding a way to do this, it won't be easy though. --Fredrick
 #       check for platform again, and decide how to install java based on sys.platform
 #       if sys.platform == ("win32"):
 #               install .\java.exe
@@ -92,19 +132,32 @@ else:
 
 admin = raw_input("Name of Admin?: ")
 
-print "If you are unsure of whitelist choose 'false'"
-whitelist = raw_input("enable whitelist?: (true) (false): ")
+print "If you are unsure of whitelist choose 'n'"
+whitelist = raw_input("Enable whitelist?: (y)es (n)o: ")
 
-if whitelist == ("true"):
-        whitelist_names = raw_input("User names of whitelisted players. serparate players with ',': ")
+if whitelist == ("y"):
+        #generates whitelist
+        writeWhitelist()
 
-elif whitelist == ("false"):
+elif whitelist == ("n"):
         pass
 
-print ("The rest of the settings are optional. if you choose no they will be set to defaults")
-print "Now this one is a hard one if unknown google how to find it we are working on how to find server ip address"
-ip= raw_input("server ip: ")
 
+#displays the current IP address that Python detects automatically and asks the user if it is correct
+print "Now to set the IP address of the server. The current IP detected by this program is: %s" % socket.gethostbyname(socket.gethostname())
+
+isCorrectIP= raw_input("Is this your current IP address? If you're not sure search Google for 'What is my IP address?' (y)es (n)o: ")
+if isCorrectIP == ('n'):
+        ip = raw_input ('Please enter the IP address of the machine the server is running on: ')
+else:
+        ip = socket.gethostbyname(socket.gethostname())
+
+print ("The rest of the settings are optional. If you choose 'n' they will be set to defaults")
+
+
+
+
+#This gets the manually set options for the server
 options = raw_input("would you like to change the default settings? (y)es (n)o: ")
 
 if options == ("y"):
@@ -150,36 +203,6 @@ if options == ("y"):
         max_players= raw_input("max player: ")
 else:
         ##Default Minecraft server properties via http://minecraft.gamepedia.com/Server.properties as of 1/12/14
-##        generator_settings=
-##        op-permission-level=4
-##        level-name=world
-##        enable-query=false
-##        allow-flight=false
-##        announce-player-achievements=true
-##        server-port=25565
-##        level-type=DEFAULT
-##        enable-rcon=false
-##        level-seed=
-##        force-gamemode=false
-##        server-ip=
-##        max-build-height=256
-##        spawn-npcs=true
-##        white-list=false
-##        spawn-animals=true
-##        hardcore=false
-##        snooper-enabled=true
-##        online-mode=true
-##        resource-pack=
-##        pvp=true
-##        difficulty=1
-##        enable-command-block=false
-##        gamemode=0
-##        player-idle-timeout=0
-##        max_players=20
-##        spawn-monsters=true
-##        generate-structures=true
-##        view-distance=10
-##        motd=A Minecraft Server
         ##Generates values for default set 
         monsters = "true"
         animals = "true"
@@ -207,9 +230,8 @@ else:
         max_players= "20"      
 
 
-#if user decided to change default values then write them to server.properties if not ignore.
-#if options == ("y"):
-        #write all changes to file
+
+#write settings to system.properties file
 server_props = ("""generator_settings=%s
 allow-nether=%s
 level-name=world
@@ -249,6 +271,7 @@ target.write(server_props)
 target.close
 
 
+#if system is detected as windows attempt to create a batch file as an easier way to start the program
 if sys.platform == ("win32"):
         #create batch/bash script in server directory to start server
         batch = "java -Xms512M -Xmx1G -jar mcserver.jar"
@@ -258,6 +281,8 @@ if sys.platform == ("win32"):
         target.close
         
 print "The program has finished setting up your server!"
+done = raw_input("Press 'Enter' to exit")
+sys.exit()
 
 
 
