@@ -12,7 +12,6 @@
 import sys #for quitting application and looking at operating system
 import socket #to find IP address of the machine
 import urllib2 #for downloading
-import re #for whitelist
 
 #This downloads any file passed in through the variable URL
 def downloader(url):
