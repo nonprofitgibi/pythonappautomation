@@ -84,7 +84,7 @@ if java == ("y"):
 
         if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
                 java = raw_input ("Would you like to try to download the current version of Java for %s? (y)es (n)o: " % sys.platform)
-                if java == (""):
+                if java == ("y"):
                         url=("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-windows-i586-iftw.exe")
                         file_name = url.split('/')[-1]
                         downloader(url)
