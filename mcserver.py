@@ -42,12 +42,25 @@ def writeWhitelist():
         whitelist_names = raw_input("User names of whitelisted players.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
         whitelistSplit = whitelist_names.split(",")
         whitelistLen =  len(whitelistSplit)
-        print "The following users are now whitelisted: ", whitelistSplit
+        print "The following users are now whitelisted: ", whitelistSplit,"\n"
         i=0
         filename = ("white-list.txt")
         target = open(filename, 'w')
         for i in range (0, whitelistLen):
                 target.write("%s\n" % whitelistSplit[i])
+                i+=1
+        target.close
+
+def writeOpsList():
+        ops_names = raw_input("User names of Server Operators.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
+        opsSplit = ops_names.split(",")
+        opsLen =  len(opsSplit)
+        print "The following users are now marked as Operators: ", opsSplit, "\n"
+        i=0
+        filename = ("ops.txt")
+        target = open(filename, 'w')
+        for i in range (0, opsLen):
+                target.write("%s\n" % opsSplit[i])
                 i+=1
         target.close
         
@@ -129,7 +142,7 @@ if java == ("y"):
 else:
         pass
 
-admin = raw_input("Name of Admin?: ")
+writeOpsList()
 
 print "If you are unsure of whitelist choose 'n'"
 whitelist = raw_input("Enable whitelist?: (y)es (n)o: ")
