@@ -144,8 +144,10 @@ else:
 
 writeOpsList()
 
-print "If you are unsure of whitelist choose 'n'"
-whitelist = raw_input("Enable whitelist?: (y)es (n)o: ")
+worldName = raw_input("What do you want to name your world? ")
+
+print "Enable whitelist?\n"
+whitelist = raw_input("If you are unsure of whitelist choose 'n': (y)es (n)o:")
 
 if whitelist == ("y"):
         #generates whitelist
@@ -246,7 +248,7 @@ else:
 #write settings to system.properties file
 server_props = ("""generator_settings=%s
 allow-nether=%s
-level-name=world
+level-name=%s
 enable-query=%s
 allow-flight=%s
 server-port=%s
@@ -273,7 +275,7 @@ generate-structures=%s
 view-distance=%s
 spawn-protection=false
 motd=%s
-"""%(generator_settings, nether, query, flight, port, port, Map_type, rcon, seed, ip, build,
+"""%(generator_settings, nether, worldName, query, flight, port, port, Map_type, rcon, seed, ip, build,
 npc, whitelist, debug, animals, texture, snooper, hardcore, online, pvp, difficulty,
 gamemode, max_players, monsters, structures, view, motd))
 
