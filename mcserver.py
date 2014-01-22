@@ -35,14 +35,14 @@ def downloader(url):
             print ""
 
         f.close()
-        finishedDownload = raw_input("Your download has finished, press 'Enter' to continue.")
+        finishedDownload = raw_input("\nYour download has finished, press 'Enter' to continue.")
 
 #This generates a white-list.txt file in the directory for the server software to use. 
 def writeWhitelist():
-        whitelist_names = raw_input("User names of whitelisted players.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
+        whitelist_names = raw_input("\n\nUser names of whitelisted players.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
         whitelistSplit = whitelist_names.split(",")
         whitelistLen =  len(whitelistSplit)
-        print "The following users are now whitelisted: ", whitelistSplit,"\n"
+        print "\n\nThe following users are now whitelisted: ", whitelistSplit,"\n"
         i=0
         filename = ("white-list.txt")
         target = open(filename, 'w')
@@ -52,10 +52,10 @@ def writeWhitelist():
         target.close
 
 def writeOpsList():
-        ops_names = raw_input("User names of Server Operators.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
+        ops_names = raw_input("\nUser names of Server Operators.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
         opsSplit = ops_names.split(",")
         opsLen =  len(opsSplit)
-        print "The following users are now marked as Operators: ", opsSplit, "\n"
+        print "\n\nThe following users are now marked as Operators: ", opsSplit, "\n"
         i=0
         filename = ("ops.txt")
         target = open(filename, 'w')
@@ -67,16 +67,20 @@ def writeOpsList():
 
 #Prompt user to download needed software
 print "Minecraft Server install script"
-install = raw_input ("Download the minecraft server software? (y)es, (n)o, or any other key to exit: ")
+install = raw_input ("\nDownload the minecraft server software? (y)es, (n)o, or any other key to exit: ")
+
 if install == ("n"):
         pass
+
 elif install == ("y"):
         file_name = "mcserver.jar"
-        print "Choose the server version you would like to download, and wait for the download to finish..."
-        print "1. Vanilla\n2. Bukkit"
-        print "Vanillia is the origional Server straight from minecraft.net,\nBukkit is oriented towards modders. If you are unsure choose vanilla."
+        print "\nChoose the server version you would like to download, and wait for the download to finish..."  
+        print "Vanillia is the origional Server straight from minecraft.net, Bukkit is oriented towards modders. If you are unsure choose vanilla."
+	print "(1. Vanilla)(2. Bukkit)"
 
-        server_type = raw_input ("Which version would you like to download? (1 or 2): ")
+
+
+        server_type = raw_input ("\nWhich version would you like to download? (1 or 2): ")
 
         if server_type == ("1"): #Downloads Minecraft Server file based on users choice
                 url = ("https://s3.amazonaws.com/Minecraft.Download/versions/1.7.4/minecraft_server.1.7.4.jar")
@@ -93,10 +97,9 @@ else:
         ## We should see if there is a way to automatically detect what version of java they are currently using and see if there is a newer version avilable maybe looking into the Java API would be useful for this
 java = raw_input("Would you like the script to download java? (y)es (n)o: ")
 if java == ("y"):
-        print ("Your system has been detected as %s. It is reccomended that you install Java manually before continuing installation of server." % sys.platform)
 
         if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
-                java = raw_input ("Would you like to try to download the current version of Java for %s? (y)es (n)o: " % sys.platform)
+                java = raw_input ("\nWould you like to try to download the current version of Java for Windows? (y)es (n)o: ")
                 if java == ("y"):
                         url=("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-windows-i586-iftw.exe")
                         file_name = url.split('/')[-1]
@@ -106,7 +109,7 @@ if java == ("y"):
                         pass
 
         elif sys.platform == ("linux") or sys.platform == ("linux2"): #If OS is detected as Linux downloads java.tar.gz
-                java = raw_input ("Would you like to try to download the current version of Java for %s? (y)es (n)o: " % sys.platform)
+                java = raw_input ("\nIt is reccomended you Install java through your Distribution repo would you like to download Java anyways? (y)es (n)o: ")
                 if java == ("y"):
                         url = ("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-linux-i586.tar.gz")
                         file_name = url.split('/')[-1]
@@ -117,7 +120,7 @@ if java == ("y"):
                         pass
         elif sys.platform == ("darwin"): #If OS is detected as darwin (Macintosh) downloads java.dmg for mac
                 
-                java = raw_input ("Would you like to try to download the current version of Java for %s? (y)es (n)o: " % sys.platform)
+                java = raw_input ("\nWould you like to try to download the current version of Java for Mac? (y)es (n)o: ")
                 if java == ("y"):
                         url = ("http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jre-7u51-macosx-x64.dmg")
                         file_name = url.split('/')[-1]
@@ -128,7 +131,7 @@ if java == ("y"):
                         pass
 
         else:
-                print ("Sorry, the script was unable to detect your operating system. Please install java manually by going to: http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html")
+                print ("\nSorry, the script was unable to detect your operating system. Please install java manually by going to: http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html")
 
 
 ## I'm working on finding a way to do this, it won't be easy though. --Fredrick
@@ -144,10 +147,10 @@ else:
 
 writeOpsList()
 
-worldName = raw_input("What do you want to name your world? ")
+worldName = raw_input("\n\nWhat do you want to name your world?  ")
 
-print "Enable whitelist?\n"
-whitelist = raw_input("If you are unsure of whitelist choose 'n': (y)es (n)o:")
+print "\nEnable whitelist?"
+whitelist = raw_input("If you are unsure of whitelist choose 'n': (y)es (n)o: ")
 
 if whitelist == ("y"):
         #generates whitelist
@@ -156,65 +159,65 @@ if whitelist == ("y"):
 elif whitelist == ("n"):
         pass
 
-
+#FIX>>>>>This is currently not functional. It detects Local host "127.0.0.1" rather than external ipadress -Kenneth Andrews
 #displays the current IP address that Python detects automatically and asks the user if it is correct
-print "Now to set the IP address of the server. The current IP detected by this program is: %s" % socket.gethostbyname(socket.gethostname())
+#print "\nNow to set the IP address of the server. The current IP detected by this program is: %s" % socket.gethostbyname(socket.gethostname())
 
-isCorrectIP= raw_input("Is this your current IP address? If you're not sure search Google for 'What is my IP address?' (y)es (n)o: ")
-if isCorrectIP == ('n'):
-        ip = raw_input ('Please enter the IP address of the machine the server is running on: ')
-else:
-        ip = socket.gethostbyname(socket.gethostname())
+#isCorrectIP= raw_input("Is this your current IP address? If you're not sure search Google for 'What is my IP address?' (y)es (n)o: ")
+#if isCorrectIP == ('n'):
+#       ip = raw_input ('\nPlease enter the IP address of the machine the server is running on: ')
+#else:
+#        ip = socket.gethostbyname(socket.gethostname())
 
-print ("The rest of the settings are optional. If you choose 'n' they will be set to defaults")
+print ("\nThe rest of the settings are optional. If you choose 'n' they will be set to defaults")
 
 
 
 
 #This gets the manually set options for the server
-options = raw_input("would you like to change the default settings? (y)es (n)o: ")
+options = raw_input("\n\nwould you like to change the default settings? (y)es (n)o: ")
 
+#FIX>>> Users Must type true/false for most variable or else it will print their inapropriate answer to the prop file. We need to notify the users of this.
 if options == ("y"):
-        monsters = raw_input("enable monsters?: ")
-        animals = raw_input("spawn animals?: ")
-        npc = raw_input("spawn NPCs?: ")
-        structures = raw_input("generate structures?: ")
-        pvp = raw_input("enable pvp?: ")
-        print "Only disable this option if you will be playing without internet"
+        monsters = raw_input("\n\nenable monsters?: ")
+        animals = raw_input("\n\nspawn animals?: ")
+        npc = raw_input("\n\nspawn NPCs?: ")
+        structures = raw_input("\n\ngenerate structures?: ")
+        pvp = raw_input("\n\nenable pvp?: ")
+        print "\n\nOnly disable this option if you will be playing without internet"
         online = raw_input("enable online mode?: ")
-        print "if a character dies their banned from the server"
+        print "\n\nif a character dies their banned from the server"
         hardcore = raw_input("enable hardcore mode?: ")
-        print "if not sure set to 25565"
+        print "\n\nif not sure set to 25565"
         port = raw_input("port number?: ")
-        print "disable if not sure"
+        print "\n\ndisable if not sure"
         rcon = raw_input("enable rcon?: ")
-        print "used for generating maps, if unsure leave blank"
+        print "\n\nused for generating maps, if unsure leave blank"
         seed = raw_input("map seed?: ")
-        print "URL link for Texture pack download, if unsure leave blank"
+        print "\n\nURL link for Texture pack download, if unsure leave blank"
         texture = raw_input("texture pack?: ")
-        print "if unsure disable"       
+        print "\n\nif unsure disable"       
         query = raw_input("enable query?: ")
-        print "(1.survival) (2.creative)"
+        print "\n\n(1.survival) (2.creative)"
         gamemode = raw_input("gamemode?: ")
-        print "(0.peacefull)(1.easy) (2.normal) (3.hard)"
+        print "\n\n(0.peacefull)(1.easy) (2.normal) (3.hard)"
         difficulty = raw_input("difficulty? 0-3: ")
-        print "Message to apear on server list"
+        print "\n\nMessage to apear on server list"
         motd = raw_input("MODT?: ")
-        print "reccomended 256"
+        print "\n\nreccomended 256"
         build = raw_input("build height?: ")
-        print "(1.default) (2.flatland) default reccomended"
+        print "\n\n(1.default) (2.flatland) default reccomended"
         Map_type = raw_input("map type? 1-2: ")
-        print "if not sure leave blank"
+        print "\n\nif not sure leave blank"
         generator_settings = raw_input("generator settings?: ")
-        print "reccomended 10"
+        print "\n\nreccomended 10"
         view = raw_input("view distance?: ")
-        nether = raw_input("allow nether (true), (false)?: ")
-        flight= raw_input("allow flight?: ")
-        print "Now this one is a hard one if unknown google how to find it we are working on how to find server ip address"
-        ip= raw_input("server ip: ")
-        debug= raw_input("debugging: ")
-        snooper= raw_input("snooper setting: ")
-        max_players= raw_input("max player: ")
+        nether = raw_input("\n\nallow nether (true), (false)?: ")
+        flight= raw_input("\n\nallow flight?: ")
+        debug= raw_input("\n\ndebugging: ")
+	ip= raw_input("\n\nServer ip: ")
+        snooper= raw_input("\n\nsnooper setting: ")
+        max_players= raw_input("\n\nmax players: ")
 else:
         ##Default Minecraft server properties via http://minecraft.gamepedia.com/Server.properties as of 1/12/14
         ##Generates values for default set 
@@ -294,7 +297,7 @@ if sys.platform == ("win32"):
         target.write(batch)
         target.close
         
-print "The program has finished setting up your server!"
+print "\n\n\nThe program has finished setting up your server!"
 done = raw_input("Press 'Enter' to exit")
 sys.exit()
 
