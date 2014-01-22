@@ -1,0 +1,11 @@
+todo list
+todo list format
+
+(solved/unsolved) thing that needs to be done/comment
+who is working on it, who else is working on it, ect
+questions about the problem, add lines tabbed or spaced in if needed
+  like so?
+anything else
+
+(unsolved)Though this will be one of the last things I would like to see an actual gui that is very user friendly
+
