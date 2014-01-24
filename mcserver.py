@@ -76,7 +76,7 @@ elif install == ("y"):
         file_name = "mcserver.jar"
         print "\nChoose the server version you would like to download, and wait for the download to finish..."  
         print "Vanillia is the origional Server straight from minecraft.net, Bukkit is oriented towards modders. If you are unsure choose vanilla."
-	print "(1. Vanilla)(2. Bukkit)"
+        print "(1. Vanilla)(2. Bukkit)"
 
 
 
@@ -158,16 +158,16 @@ if whitelist == ("y"):
 
 elif whitelist == ("n"):
         pass
-
+ip = urllib2.urlopen('http://ip.42.pl/raw').read()
 #FIX>>>>>This is currently not functional. It detects Local host "127.0.0.1" rather than external ipadress -Kenneth Andrews
 #displays the current IP address that Python detects automatically and asks the user if it is correct
-#print "\nNow to set the IP address of the server. The current IP detected by this program is: %s" % socket.gethostbyname(socket.gethostname())
+print ("\nNow to set the IP address of the server. The current IP detected by this program is: %s" % ip)
 
-#isCorrectIP= raw_input("Is this your current IP address? If you're not sure search Google for 'What is my IP address?' (y)es (n)o: ")
-#if isCorrectIP == ('n'):
-#       ip = raw_input ('\nPlease enter the IP address of the machine the server is running on: ')
-#else:
-#        ip = socket.gethostbyname(socket.gethostname())
+isCorrectIP= raw_input("Is this your current IP address? If you're not sure search Google for 'What is my IP address?' (y)es (n)o: ")
+if isCorrectIP == ('n'):
+       ip = raw_input ('\nPlease enter the IP address of the machine the server is running on: ')
+else:
+        ip = urllib2.urlopen('http://ip.42.pl/raw').read()
 
 print ("\nThe rest of the settings are optional. If you choose 'n' they will be set to defaults")
 
@@ -215,7 +215,7 @@ if options == ("y"):
         nether = raw_input("\n\nallow nether (true), (false)?: ")
         flight= raw_input("\n\nallow flight?: ")
         debug= raw_input("\n\ndebugging: ")
-	ip= raw_input("\n\nServer ip: ")
+        ip= raw_input("\n\nServer ip: ")
         snooper= raw_input("\n\nsnooper setting: ")
         max_players= raw_input("\n\nmax players: ")
 else:
