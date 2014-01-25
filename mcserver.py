@@ -64,9 +64,15 @@ def writeOpsList():
                 i+=1
         target.close
 
+#this function will ask the user for a yes or no option then return a boolean value
 def getBool():
-        choice = raw_input("(true), (false): ")
-        if ((choice == 'true')|(choice == 'false')):
+        choice = raw_input("(y)es, (n)o: ")
+        
+        if ((choice == 'y')|(choice == 'n')):
+                if (choice == y):
+                        choice = 'true'
+                else:
+                        choice = 'false'
                 return choice
         else:
                 print"Invalid option."
