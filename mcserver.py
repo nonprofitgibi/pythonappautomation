@@ -63,6 +63,21 @@ def writeOpsList():
                 target.write("%s\n" % opsSplit[i])
                 i+=1
         target.close
+
+#this function will ask the user for a yes or no option then return a boolean value
+def getBool():
+        choice = raw_input("(y)es, (n)o: ")
+        
+        if ((choice == 'y')|(choice == 'n')):
+                if (choice == 'y'):
+                        choice = 'true'
+                else:
+                        choice = 'false'
+                return choice
+        else:
+                print"Invalid option."
+                getBool()
+        
         
 
 #Prompt user to download needed software
@@ -179,45 +194,91 @@ options = raw_input("\n\nwould you like to change the default settings? (y)es (n
 
 #FIX>>> Users Must type true/false for most variable or else it will print their inapropriate answer to the prop file. We need to notify the users of this.
 if options == ("y"):
-        monsters = raw_input("\n\nenable monsters?: ")
-        animals = raw_input("\n\nspawn animals?: ")
-        npc = raw_input("\n\nspawn NPCs?: ")
-        structures = raw_input("\n\ngenerate structures?: ")
-        pvp = raw_input("\n\nenable pvp?: ")
+        print ("\n\nenable monsters?")
+        monsters = getBool()
+        
+        print ("\n\nspawn animals?")
+        animals = getBool()
+        
+        print("\n\nspawn NPCs?")
+        npc = getBool()
+        
+        print("\n\ngenerate structures?")
+        structures = getBool()
+        
+        print("\n\nenable pvp?")
+        pvp = getBool()
+        
         print "\n\nOnly disable this option if you will be playing without internet"
-        online = raw_input("enable online mode?: ")
+        print("enable online mode?")
+        online = getBool()
+        
         print "\n\nif a character dies their banned from the server"
-        hardcore = raw_input("enable hardcore mode?: ")
+        print("enable hardcore mode?")
+        hardcore = getBool()
+        
         print "\n\nif not sure set to 25565"
-        port = raw_input("port number?: ")
-        print "\n\ndisable if not sure"
-        rcon = raw_input("enable rcon?: ")
+        port = raw_input("port number: ")
+        #need function to check for proper input
+        
+        print "\n\nChoose False if not sure."
+        print("enable rcon?")
+        rcon = getBool()
+        
         print "\n\nused for generating maps, if unsure leave blank"
-        seed = raw_input("map seed?: ")
+        seed = raw_input("map seed: ")
+        #need function to check for proper input
+        
         print "\n\nURL link for Texture pack download, if unsure leave blank"
-        texture = raw_input("texture pack?: ")
-        print "\n\nif unsure disable"       
-        query = raw_input("enable query?: ")
+        texture = raw_input("texture pack URL: ")
+        #need function to check for proper input, and also is this supposed to download the server pack?
+        
+        print "\n\nIf unsure select false"       
+        print("enable query?")
+        query = getBool()
+        
         print "\n\n(1.survival) (2.creative)"
         gamemode = raw_input("gamemode?: ")
+        #need function to check for proper input
+        
         print "\n\n(0.peacefull)(1.easy) (2.normal) (3.hard)"
         difficulty = raw_input("difficulty? 0-3: ")
+        #need function to check for proper input
+        
         print "\n\nMessage to apear on server list"
-        motd = raw_input("MODT?: ")
+        motd = raw_input("MOTD: ")
+        
         print "\n\nreccomended 256"
         build = raw_input("build height?: ")
+        #need function to check for proper input
+        
         print "\n\n(1.default) (2.flatland) default reccomended"
         Map_type = raw_input("map type? 1-2: ")
-        print "\n\nif not sure leave blank"
-        generator_settings = raw_input("generator settings?: ")
+        #need function to check for proper input
+        
+        print "\n\nIf not sure leave blank"
+        generator_settings = raw_input("generator settings: ")
+        
         print "\n\nreccomended 10"
         view = raw_input("view distance?: ")
-        nether = raw_input("\n\nallow nether (true), (false)?: ")
-        flight= raw_input("\n\nallow flight?: ")
-        debug= raw_input("\n\ndebugging: ")
-        ip= raw_input("\n\nServer ip: ")
-        snooper= raw_input("\n\nsnooper setting: ")
+        #need function to check for proper input
+        
+        print("\n\nallow nether?")
+        nether = getBool()
+        
+        print("\n\nallow flight?")
+        flight= getBool()
+        
+        print("\n\nEnable debugging?")
+        debug= getBool()
+        
+        print "\n\nIf unsure select true"
+        print("snooper setting.")
+        snooper= getBool()
+        
         max_players= raw_input("\n\nmax players: ")
+        #need function to check for proper input
+
 else:
         ##Default Minecraft server properties via http://minecraft.gamepedia.com/Server.properties as of 1/12/14
         ##Generates values for default set 
