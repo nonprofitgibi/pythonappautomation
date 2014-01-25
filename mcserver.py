@@ -69,7 +69,7 @@ def getBool():
         choice = raw_input("(y)es, (n)o: ")
         
         if ((choice == 'y')|(choice == 'n')):
-                if (choice == y):
+                if (choice == 'y'):
                         choice = 'true'
                 else:
                         choice = 'false'
