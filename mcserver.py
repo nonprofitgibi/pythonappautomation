@@ -37,10 +37,14 @@ def downloader(url):
         f.close()
         finishedDownload = raw_input("\nYour download has finished, press 'Enter' to continue.")
 
-#This generates a white-list.txt file in the directory for the server software to use. 
-def writeWhitelist():
+
+def writeWhitelist(): #This generates a white-list.txt file in the directory for the server software to use. 
         whitelist_names = raw_input("\n\nUser names of whitelisted players.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
         whitelistSplit = whitelist_names.split(",")
+	x = 0
+	for name in whitelistSplit:
+		whitelistSplit[x] = name.strip(" ")#strips the white space from the front or back of the names
+		x += 1
         whitelistLen =  len(whitelistSplit)
         print "\n\nThe following users are now whitelisted: ", whitelistSplit,"\n"
         i=0
@@ -54,6 +58,10 @@ def writeWhitelist():
 def writeOpsList():
         ops_names = raw_input("\nUser names of Server Operators.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
         opsSplit = ops_names.split(",")
+	x = 0
+	for name in opsSplit:
+		opsSplit[x] = name.strip(" ")#strips the white space from the front or back of the names
+		x += 1
         opsLen =  len(opsSplit)
         print "\n\nThe following users are now marked as Operators: ", opsSplit, "\n"
         i=0
@@ -68,97 +76,125 @@ def writeOpsList():
 def getBool():
         choice = raw_input("(y)es, (n)o: ")
         
-        if ((choice == 'y')|(choice == 'n')):
-                if (choice == 'y'):
-                        choice = 'true'
-                else:
-                        choice = 'false'
-                return choice
+        while not((choice == 'y')|(choice == 'n')):
+        	print"Invalid option."
+		choice = raw_input("Type \"y\" for yes or \"n\" for no")
+
+	if (choice == 'y'):
+                choice = 'true'
         else:
-                print"Invalid option."
-                getBool()
+                choice = 'false'
+        return choice
         
         
 
 #Prompt user to download needed software
-print "Minecraft Server install script"
-install = raw_input ("\nDownload the minecraft server software? (y)es, (n)o, or any other key to exit: ")
+def main()
+	print "This program is a Minecraft Server installer script, and will install and set up the minecraft server for you."
+	java = raw_input("\nDo you currently have the latest version of java installed (y)es or (n)o?")
+	while not (java == 'y' or java == 'n'):
+		if java.tolower() == 'yes':
+			java = 'y'
+		elif java.tolower() == 'no':
+			java = 'n'
+		else:
+			print "Invalid input please input please try agian"
+			java = raw_input('Please type a "y" for yes or a "n" for no.')
+	if java == 'y':
+		val = installer()
+		if not val:
+			print ("Thank you")
+		
 
-if install == ("n"):
-        pass
+def installer():
+	install = raw_input ("\nDownload the minecraft server software? (y)es or (n)o?")
+	while not (install == 'y' or install == 'n'):
+		if install.tolower() == 'yes':
+			install = 'y'
+		elif install.tolower() == 'no':
+			install = 'n'
+		else:
+			print "Invalid input please input please try agian"
+			install = raw_input('Please type a "y" for yes or a "n" for no.')
 
-elif install == ("y"):
-        file_name = "mcserver.jar"
-        print "\nChoose the server version you would like to download, and wait for the download to finish..."  
-        print "Vanillia is the origional Server straight from minecraft.net, Bukkit is oriented towards modders. If you are unsure choose vanilla."
-        print "(1. Vanilla)(2. Bukkit)"
+	if install == ("n"):
+		val = False
+
+	else:
+		file_name = "mcserver.jar"
+		print "\nChoose the server version you would like to download, and wait for the download to finish..."  
+		print "Vanillia is the original Server straight from minecraft.net, Bukkit is oriented towards modders. If you are unsure choose vanilla."
+		print "(1. Vanilla)(2. Bukkit)"
 
 
 
-        server_type = raw_input ("\nWhich version would you like to download? (1 or 2): ")
+		server_type = raw_input ("\nWhich version would you like to download? (1 or 2): ")
 
-        if server_type == ("1"): #Downloads Minecraft Server file based on users choice
-                url = ("https://s3.amazonaws.com/Minecraft.Download/versions/1.7.4/minecraft_server.1.7.4.jar")
-                downloader(url)
-        
-        if server_type == ("2"):
-                url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
-                downloader(url)
-else:
-        sys.exit()
+		if server_type == ("1"): #Downloads basic Minecraft Server file based on users choice
+		        url = ("https://s3.amazonaws.com/Minecraft.Download/versions/1.7.4/minecraft_server.1.7.4.jar")
+		        downloader(url)
+		
+		if server_type == ("2"): #downloads mod friendly server
+		        url = ("http://dl.bukkit.org/downloads/craftbukkit/get/01845_1.4.7-R1.0/craftbukkit.jar")
+		        downloader(url)
+		val = True
+	return val
+
 
 
 #Prompts user to download the most recently available version of java
         ## We should see if there is a way to automatically detect what version of java they are currently using and see if there is a newer version avilable maybe looking into the Java API would be useful for this
-java = raw_input("Would you like the script to download java? (y)es (n)o: ")
-if java == ("y"):
+#currently I am not going to try to install java and if java is not installed then I will ask for them to install java first then come back and re run this program.
+def javaInstaller()
+	java = raw_input("Would you like the script to download java? (y)es (n)o: ")
+	if java == ("y"):
 
-        if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
-                java = raw_input ("\nWould you like to try to download the current version of Java for Windows? (y)es (n)o: ")
-                if java == ("y"):
-                        url=("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-windows-i586-iftw.exe")
-                        file_name = url.split('/')[-1]
-                        downloader(url)
-                        
-                elif java == ("n"):
-                        pass
+		if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
+		        java = raw_input ("\nWould you like to try to download the current version of Java for Windows? (y)es (n)o: ")
+		        if java == ("y"):
+		                url=("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-windows-i586-iftw.exe")
+		                file_name = url.split('/')[-1]
+		                downloader(url)
+		                
+		        elif java == ("n"):
+		                pass
 
-        elif sys.platform == ("linux") or sys.platform == ("linux2"): #If OS is detected as Linux downloads java.tar.gz
-                java = raw_input ("\nIt is reccomended you Install java through your Distribution repo would you like to download Java anyways? (y)es (n)o: ")
-                if java == ("y"):
-                        url = ("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-linux-i586.tar.gz")
-                        file_name = url.split('/')[-1]
-                        downloader(url)
+		elif sys.platform == ("linux") or sys.platform == ("linux2"): #If OS is detected as Linux downloads java.tar.gz
+		        java = raw_input ("\nIt is reccomended you Install java through your Distribution repo would you like to download Java anyways? (y)es (n)o: ")
+		        if java == ("y"):
+		                url = ("http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-linux-i586.tar.gz")
+		                file_name = url.split('/')[-1]
+		                downloader(url)
 
-                
-                elif java == ("n"):
-                        pass
-        elif sys.platform == ("darwin"): #If OS is detected as darwin (Macintosh) downloads java.dmg for mac
-                
-                java = raw_input ("\nWould you like to try to download the current version of Java for Mac? (y)es (n)o: ")
-                if java == ("y"):
-                        url = ("http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jre-7u51-macosx-x64.dmg")
-                        file_name = url.split('/')[-1]
-                        downloader(url)
+		        
+		        elif java == ("n"):
+		                pass
+		elif sys.platform == ("darwin"): #If OS is detected as darwin (Macintosh) downloads java.dmg for mac
+		        
+		        java = raw_input ("\nWould you like to try to download the current version of Java for Mac? (y)es (n)o: ")
+		        if java == ("y"):
+		                url = ("http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jre-7u51-macosx-x64.dmg")
+		                file_name = url.split('/')[-1]
+		                downloader(url)
 
-                
-                elif java == ("n"):
-                        pass
+		        
+		        elif java == ("n"):
+		                pass
 
-        else:
-                print ("\nSorry, the script was unable to detect your operating system. Please install java manually by going to: http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html")
+		else:
+		        print ("\nSorry, the script was unable to detect your operating system. Please install java manually by going to: http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html")
 
 
-## I'm working on finding a way to do this, it won't be easy though. --Fredrick
-#       check for platform again, and decide how to install java based on sys.platform
-#       if sys.platform == ("win32"):
-#               install .\java.exe
+	## I'm working on finding a way to do this, it won't be easy though. --Fredrick
+	#       check for platform again, and decide how to install java based on sys.platform
+	#       if sys.platform == ("win32"):
+	#               install .\java.exe
 
-#       elif sys.platform == ("linux") or sys.platform == ("linux2"):
-#               extract, and install ./java.tar.gz
+	#       elif sys.platform == ("linux") or sys.platform == ("linux2"):
+	#               extract, and install ./java.tar.gz
 
-else:
-        pass
+	else:
+		pass
 
 writeOpsList()
 
