@@ -9,3 +9,22 @@ anything else
 
 (unsolved)Though this will be one of the last things I would like to see an actual gui that is very user friendly
 
+(unsolved)java downloader
+   nonprofit
+
+(unsolved)data validation
+   nonprofit
+   I'm working to make questions a little nicer and validate the answer every time to ensure that the answer is not mistyped or
+      invalid
+
+(unsolved)language update/change
+   nonprofit
+   I'm either going to update to py3.0 or java but the ultimate goal is to not have it be interperated for ease of use 
+      to the end user
+
+(unsolved)error handeling
+   nonprofit and anyone else who uses this 
+   If you come across an error please notify me(nonprofit) or any one else I need to either fix it or set up an exception
+      to make sure that it does not crash but rather alerts the user and is able to give a proper error message befor exiting
+      and saving the data to a file to be used as a crash report.
+
