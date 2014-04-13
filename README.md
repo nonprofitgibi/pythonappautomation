@@ -19,3 +19,20 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+
+Instructions
+==============================================
+1. Ensure that you have the latest version of Python 2.x installed (not compatible with Python 3.x), for more information refer to http://www.python.org/
+2. Place the mcserver.py into the directory to which you would like to install your server.
+3. Double click the mcserver.py and follow the instructions in the command line window.
+
+
+
+How to submit bug reports
+==============================================
+https://github.com/nonprofitgibi/pythonappautomation/issues
+
+http://fredrickpaulin.com/contact-me.html
