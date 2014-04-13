@@ -15,28 +15,28 @@ import urllib2 #for downloading
 
 #This downloads any file passed in through the variable URL
 def downloader(url,file_name): #this needs to be in a try except thing
-##        u = urllib2.urlopen(url)
-##        f = open(file_name, 'wb')
-##        meta = u.info()
-##        #print u.info().headers
-##        file_size = int(meta.getheaders("Content-Length")[0])
-##        print "Downloading: %s Bytes: %s" % (file_name, file_size)
-##        raw_input('Press enter to continue')
-##
-##        file_size_dl = 0
-##        block_sz = 8192
-##        while True:
-##            buffer = u.read(block_sz)
-##            if not buffer:
-##                break
-##
-##            file_size_dl += len(buffer)
-##            f.write(buffer)
-##            status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
-##            print status
-##            print ""
-##
-##        f.close()
+        u = urllib2.urlopen(url)
+        f = open(file_name, 'wb')
+        meta = u.info()
+        #print u.info().headers
+        file_size = int(meta.getheaders("Content-Length")[0])
+        print "Downloading: %s Bytes: %s" % (file_name, file_size)
+        raw_input('Press enter to continue')
+
+        file_size_dl = 0
+        block_sz = 8192
+        while True:
+            buffer = u.read(block_sz)
+            if not buffer:
+                break
+
+            file_size_dl += len(buffer)
+            f.write(buffer)
+            status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
+            print status
+            print ""
+
+        f.close()
         raw_input("\nYour download has finished, press 'Enter' to continue.")
 
 
