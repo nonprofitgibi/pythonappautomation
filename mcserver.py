@@ -85,7 +85,16 @@ def getBool():
         else:
                 choice = 'false'
         return choice
-        
+def getInt():
+        while True:
+                userInt = raw_input('Please enter an integer value: ')
+                try:
+                        userInt = int(userInt)
+                        # if we reach this point, that means we got our number
+                        return str(userInt)
+                except ValueError:
+                        # if we reach this point, that means the input was bad
+                        print('Invalid input')       
         
 
 #Prompt user to download needed software
@@ -143,6 +152,7 @@ def serverInstaller():
 #currently I am not going to try to install java and if java is not installed then I will ask for them to install java first then come back and re run this program.
 def javaInstaller():
         java = raw_input("Would you like the script to download java? (y)es (n)o: ")
+        java = validateY_N(java)
         if java == ("y"):
 
                 if sys.platform == ("win32"): #If OS is detected as windows downloads java.exe
@@ -212,6 +222,14 @@ def serverSetup():
 
         elif whitelist == ("n"):
                 val = False
+
+        generateServerSettings(worldName)
+
+
+def generateServerSettings(worldName):
+        #This gets the manually set options for the server
+        options = raw_input("\n\nwould you like to change the default settings? (y)es (n)o: ")
+        options = validateY_N(options)
         ip = urllib2.urlopen('http://ip.42.pl/raw').read()
         print ip
         #FIX>>>>>This is currently not functional. It detects Local host "127.0.0.1" rather than external ipadress -Kenneth Andrews
@@ -221,18 +239,11 @@ def serverSetup():
         isCorrectIP= raw_input("Is this your current IP address? If you're not sure search Google for 'What is my IP address?' (y)es (n)o: ")
         isCorrectIP = validateY_N(isCorrectIP)
         if isCorrectIP == ('n'):
-               ip = raw_input ('\nPlease enter the IP address of the machine the server is running on: ')
+                ip = raw_input ('\nPlease enter the IP address of the machine the server is running on: ')
         else:
                 ip = urllib2.urlopen('http://ip.42.pl/raw').read()
 
         print ("\nThe rest of the settings are optional. If you choose 'n' they will be set to defaults")
-        generateServerSettings(worldName)
-
-
-def generateServerSettings(worldName):
-        #This gets the manually set options for the server
-        options = raw_input("\n\nwould you like to change the default settings? (y)es (n)o: ")
-        options = validateY_N(options)
 
         #FIX>>> Users Must type true/false for most variable or else it will print their inapropriate answer to the prop file. We need to allow for the users to type either yes, true, no or false without a failure
         if options == ("y"):
@@ -261,10 +272,12 @@ def generateServerSettings(worldName):
                 
                 print "\n\nif not sure set to 25565"
                 port = raw_input("port number: ")
-                #place in try
-                while int(port) < 0 or int(port) > 65535:
-                        print "Ports are between 0 and 65535 please enter a valid number"
-                        port = raw_input()
+                if choice == 'true':
+                        while int(port) < 0 or int(port) > 65535:
+                                print "Ports are between 0 and 65535 please enter a valid number"
+                                port = getInt()
+                else:
+                        port = '25565'
                 #need function to check for proper input -- Tanner done
                 
                 print "\n\nChoose no if not sure."
@@ -272,10 +285,10 @@ def generateServerSettings(worldName):
                 rcon = getBool()
                 
                 print "\n\nused for generating maps, if unsure leave blank"
-                seed = raw_input("map seed: ")
+                seed = raw_input("Map seed: ")
                 #need function to check for proper input
-                #I don't beleave that seeds really have any restrictions I've looked into it and I'm going to look at the actuall code but
-                #I think the only restriction would be the actual length of the seed is too long possibly 256 or something of the sorts -- Tanner
+                #seed = checkSeed(seed)
+                #need function to check for proper input, this can only be a set of whole non-negative numbers and or characters.
                 
                 print "\n\nURL link for Texture pack download, if unsure leave blank"
                 texture = raw_input("texture pack URL: ")
@@ -291,14 +304,16 @@ def generateServerSettings(worldName):
                 #need function to check for proper input
                 
                 print "\n\n(0.peacefull)(1.easy) (2.normal) (3.hard)"
-                difficulty = raw_input("difficulty? 0-3: ")
+                difficulty = getInt()
                 #need function to check for proper input
                 
                 print "\n\nMessage to apear on server list"
                 motd = raw_input("MOTD: ")
-                
+
                 print "\n\nreccomended 256"
-                build = raw_input("build height?: ")
+                print "Build height?: "
+                build = getInt()
+                
                 #need function to check for proper input
                 
                 print "\n\n(1.default) (2.flatland) default reccomended"
@@ -311,7 +326,8 @@ def generateServerSettings(worldName):
                 generator_settings = raw_input("generator settings: ")
                 
                 print "\n\nreccomended 10"
-                view = raw_input("view distance?: ")
+                print "View distance?: "
+                view = getInt()
                 #need function to check for proper input
                 
                 print("\n\nallow nether?")
@@ -326,8 +342,9 @@ def generateServerSettings(worldName):
                 print "\n\nIf unsure select true"
                 print("snooper setting.")
                 snooper= getBool()
-                
-                max_players= raw_input("\n\nmax players: ")
+
+                print "Max players?: "
+                max_players= getInt()
                 #need function to check for proper input
 
         else:
