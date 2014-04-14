@@ -10,7 +10,6 @@
 # Copyright     2014 Kenneth Andrews, Tanner Gibson, Fredrick Paulin
 #..........................................................................................
 import sys #for quitting application and looking at operating system
-import socket #to find IP address of the machine
 import urllib2 #for downloading
 
 #This downloads any file passed in through the variable URL
@@ -20,27 +19,37 @@ def downloader(url,file_name): #this needs to be in a try except thing
         meta = u.info()
         #print u.info().headers
         file_size = int(meta.getheaders("Content-Length")[0])
-        print "Downloading: %s Bytes: %s" % (file_name, file_size)
+        print ("Downloading: %s Bytes: %s") % (file_name, file_size)
         raw_input('Press enter to continue')
 
         file_size_dl = 0
         block_sz = 8192
+        last = 0
         while True:
-            buffer = u.read(block_sz)
-            if not buffer:
-                break
+                buffer = u.read(block_sz)
+                if not buffer:
+                        break
 
-            file_size_dl += len(buffer)
-            f.write(buffer)
-            status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
-            print status
-            print ""
+                file_size_dl += len(buffer)
+                f.write(buffer)
+                status = r"[%3.2f%%]" % (file_size_dl * 100. / file_size)
+                test = status.strip('\%]').strip('[')
+                #if float(test) < 100:
+                if float(test) > last and int(float(test))%10 == 0:
+                        #last = int(float(test)) + 10
+                        #if int(float(test))%10 == 0:
+                        print str(int(float(test))) + '%',
+                        #print test, last
+                        last = int(float(test)) + 10
+                                        
+        print "done"
+        print ""
 
         f.close()
         raw_input("\nYour download has finished, press 'Enter' to continue.")
 
 
-def writeWhitelist(): #This generates a white-list.txt file in the directory for the server software to use. 
+def generateWhitelist(): #This generates a white-list.txt file in the directory for the server software to use. 
         whitelist_names = raw_input("\n\nUser names of whitelisted players.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
         whitelistSplit = whitelist_names.split(",")
         x = 0
@@ -49,15 +58,20 @@ def writeWhitelist(): #This generates a white-list.txt file in the directory for
                 x += 1
         whitelistLen =  len(whitelistSplit)
         print "\n\nThe following users are now whitelisted: ", whitelistSplit,"\n"
+        print "Accept WhiteList?: "
+        whitelist = getBool()
+        return whitelist, whitelistSplit
+        
+def writeWhitelist(whitelist):
         i=0
         filename = ("white-list.txt")
         target = open(filename, 'w')
-        for i in range (0, whitelistLen):
-                target.write("%s\n" % whitelistSplit[i])
+        for i in range (len(whitelist)):
+                target.write("%s\n" % whitelist[i])
                 i+=1
         target.close
 
-def writeOpsList():
+def generateOpsList():
         ops_names = raw_input("\nUser names of Server Operators.\nSeparate players with ',' without any spaces (name1,name2,name3): ")
         opsSplit = ops_names.split(",")
         x = 0
@@ -66,11 +80,16 @@ def writeOpsList():
                 x += 1
         opsLen =  len(opsSplit)
         print "\n\nThe following users are now marked as Operators: ", opsSplit, "\n"
+        print "Accept Ops List?: "
+        opslist = getBool()
+        return opslist, opsSplit
+
+def writeOpsList(ops):
         i=0
         filename = ("ops.txt")
         target = open(filename, 'w')
-        for i in range (0, opsLen):
-                target.write("%s\n" % opsSplit[i])
+        for i in range (len(ops)):
+                target.write("%s\n" % ops[i])
                 i+=1
         target.close
 
@@ -80,7 +99,7 @@ def getBool():
         
         choice = validateY_N(choice)
 
-        if (choice.lower == 'y'):
+        if (choice.lower() == 'y'):
                 choice = 'true'
         else:
                 choice = 'false'
@@ -91,7 +110,7 @@ def getInt():
                 try:
                         userInt = int(userInt)
                         # if we reach this point, that means we got our number
-                        return str(userInt)
+                        return userInt
                 except ValueError:
                         # if we reach this point, that means the input was bad
                         print('Invalid input')       
@@ -106,6 +125,7 @@ def main():
                 val = serverInstaller()
                 if not val:
                         print "Thank you"
+                        val = serverSetup()
                 else:
                         val = serverSetup()
                         if val:
@@ -121,11 +141,12 @@ def main():
 def serverInstaller():
         install = raw_input ("\nDownload the minecraft server software? (y)es or (n)o? ")
         install = validateY_N(install)
+        print install
 
-        if install.lower == ("n"):
+        if install == "n":
                 val = False
 
-        else:
+        elif install == "y":
                 file_name = "mcserver.jar"
                 print "\nChoose the server version you would like to download, and wait for the download to finish..."  
                 print "Vanillia is the original Server straight from minecraft.net, Bukkit is oriented towards modders. If you are unsure choose vanilla."
@@ -212,24 +233,41 @@ def javaInstaller():
 def serverSetup():
         worldName = raw_input("\n\nWhat do you want to name your world?  ")
 
-        print "\nEnable whitelist?"
+        print "\nEnable whitelist?: "
         whitelist = raw_input("If you are unsure of whitelist choose 'n': (y)es (n)o: ")
         whitelist = validateY_N(whitelist)
 
-        if whitelist == ("y"):
+        while whitelist == ("y"):
                 #generates whitelist
-                writeWhitelist()
+                T_F, whitelist = generateWhitelist()
+                if T_F == "true":
+                        writeWhitelist(whitelist)
+                        whitelisted = "true"
+                        break
+                        
+        if whitelist == ("n"):
+                whitelisted = "false"
 
-        elif whitelist == ("n"):
-                val = False
+        print "\nEnable Ops?: "
+        ops = raw_input("If you are unsure of enableing ops list choose \"n\": (y)es (n)o: ")
+        ops = validateY_N(ops)
+        while ops == ("y"):
+                T_F, ops = generateOpsList()
+                if T_F == "true":
+                        writeOpsList(ops)
+                        opsList = 'true'
+                        break
 
-        generateServerSettings(worldName)
+        if ops == "n":
+                opsList = "false"
+        else:
+                opsList = "true"
+
+        generateServerSettings(worldName, whitelisted, opsList)
 
 
-def generateServerSettings(worldName):
+def generateServerSettings(worldName, whitelist, opsList):
         #This gets the manually set options for the server
-        options = raw_input("\n\nwould you like to change the default settings? (y)es (n)o: ")
-        options = validateY_N(options)
         ip = urllib2.urlopen('http://ip.42.pl/raw').read()
         print ip
         #FIX>>>>>This is currently not functional. It detects Local host "127.0.0.1" rather than external ipadress -Kenneth Andrews
@@ -245,55 +283,70 @@ def generateServerSettings(worldName):
 
         print ("\nThe rest of the settings are optional. If you choose 'n' they will be set to defaults")
 
+        options = raw_input("\n\nwould you like to change the default settings? (y)es (n)o: ")
+        options = validateY_N(options)
         #FIX>>> Users Must type true/false for most variable or else it will print their inapropriate answer to the prop file. We need to allow for the users to type either yes, true, no or false without a failure
         if options == ("y"):
                 print ("\n\nenable monsters?")
                 monsters = getBool()
+                print monsters
                 
                 print ("\n\nspawn animals?")
                 animals = getBool()
+                print animals
                 
                 print("\n\nspawn NPCs?")
                 npc = getBool()
+                print npc
                 
                 print("\n\ngenerate structures?")
                 structures = getBool()
+                print structures
                 
                 print("\n\nenable pvp?")
                 pvp = getBool()
+                print pvp
                 
-                print "\n\nOnly disable this option if you will be playing without internet"
+                print "\n\nOnly disable this option if you don't want to validate the players."
                 print("enable online mode?")
                 online = getBool()
+                print online
+                #online mode can be more than just true or false it can or used to be able to be set to all but that might not be the case anymore and all wasn't any differnt from false
                 
                 print "\n\nif a character dies their banned from the server"
                 print("enable hardcore mode?")
                 hardcore = getBool()
+                print hardcore
                 
                 print "\n\nif not sure set to 25565"
-                port = raw_input("port number: ")
-                if choice == 'true':
-                        while int(port) < 0 or int(port) > 65535:
+                choice = raw_input("Change port number?: ")
+                choice = validateY_N(choice)
+                print choice               
+                if choice == 'y':
+                        print "Port number"
+                        port = getInt()
+                        while port < 0 or port > 65535:
                                 print "Ports are between 0 and 65535 please enter a valid number"
                                 port = getInt()
                 else:
                         port = '25565'
+                port =  str(port)
+                print port
                 #need function to check for proper input -- Tanner done
                 
                 print "\n\nChoose no if not sure."
                 print("enable rcon?")
                 rcon = getBool()
+                print 
                 
                 print "\n\nused for generating maps, if unsure leave blank"
                 seed = raw_input("Map seed: ")
                 #need function to check for proper input
-                #seed = checkSeed(seed)
+                error = True
+                #while error:
+                #        seed, error = checkSeed(seed, error)
                 #need function to check for proper input, this can only be a set of whole non-negative numbers and or characters.
-                
-                print "\n\nURL link for Texture pack download, if unsure leave blank"
-                texture = raw_input("texture pack URL: ")
-                #need function to check for proper input, and also is this supposed to download the server pack?
-                
+                                
                 print "\n\nChoose no if not sure"       
                 print("enable query?")
                 query = getBool()
@@ -305,6 +358,12 @@ def generateServerSettings(worldName):
                 
                 print "\n\n(0.peacefull)(1.easy) (2.normal) (3.hard)"
                 difficulty = getInt()
+                while difficulty < 0 or difficulty > 3:
+                        print 'Difficulty must be between 0 and 3.'
+                        print 'Please try again: '
+                        difficulty = getInt()
+
+                difficulty = str(difficulty)
                 #need function to check for proper input
                 
                 print "\n\nMessage to apear on server list"
@@ -313,6 +372,13 @@ def generateServerSettings(worldName):
                 print "\n\nreccomended 256"
                 print "Build height?: "
                 build = getInt()
+                
+                #to the best of my knowlage 256 is the max anything below that is well acceptable but I wonder what goes on below if you set it negative could it cause issues or what so time for some
+                #digging through minecraft source or some research because no one seems to care about a min just a max --Tanner also from the sounds of it bukkit has a build height max of 400 ish
+                while build > 256:
+                        print "build height max is 256 please try agian"
+                        build = getInt()
+                build =  str(build)
                 
                 #need function to check for proper input
                 
@@ -336,16 +402,27 @@ def generateServerSettings(worldName):
                 print("\n\nallow flight?")
                 flight= getBool()
                 
-                print("\n\nEnable debugging?")
-                debug= getBool()
-                
                 print "\n\nIf unsure select true"
                 print("snooper setting.")
                 snooper= getBool()
 
                 print "Max players?: "
-                max_players= getInt()
+                max_players = str(getInt())
                 #need function to check for proper input
+                #new settings need to set up q&a for them but its 2am so I'll get it tomorrow
+                oplvl="4"
+                playerAchievements="true"
+                forceGamemode = "false"
+                commandBlock = "false"
+                spwanProtection = "16"
+                rconPort = "25575"
+                queryPort = "25565"
+                rconPasword = ""
+                serverName = "Python generated server"
+                resource = ""
+                playerTimeout = "0"
+                rconPassword = ""
+                spawnProtection = "16"
 
         else:
                 ##Default Minecraft server properties via http://minecraft.gamepedia.com/Server.properties as of 1/12/14
@@ -360,7 +437,6 @@ def generateServerSettings(worldName):
                 port = "25565"
                 rcon = "false"
                 seed = ""
-                texture =""
                 query = "false"
                 gamemode = "0"
                 difficulty = "1"
@@ -371,44 +447,66 @@ def generateServerSettings(worldName):
                 view = "10"
                 nether = "true"
                 flight= "false"
-                debug= ""
                 snooper= "true"
-                max_players= "20"      
+                max_players= "20"
+                #new settings for newer servers
+                oplvl="4"
+                playerAchievements="true"
+                forceGamemode = "false"
+                commandBlock = "false"
+                spwanProtection = "16"
+                rconPort = "25575"
+                queryPort = "25565"
+                rconPasword = ""
+                serverName = "Python generated server"
+                resource = ""
+                playerTimeout = "0"
+                rconPassword = ""
+                spawnProtection = "16"
 
 
 
         #write settings to system.properties file
         server_props = ("""generator_settings=%s
+op-permission-level=%s
 allow-nether=%s
 level-name=%s
 enable-query=%s
 allow-flight=%s
+announce-player-achievements=%s
 server-port=%s
+server-name=%s
 query.port=%s
-evel-type=%s
+level-type=%s
 enable-rcon=%s
+rcon.password=%s
+rcon.port=%s
+force-gamemode=%s
 level-seed=%s
 server-ip=%s
 max-build-height=%s
+resource-pack=%s
 spawn-ncps=%s
 white-list=%s
-debug=%s
 spawn-animals=%s
-texture-pack=%s
-snooper-enabled=%s
 hardcore=%s
+snooper-enabled=%s
 online-mode=%s
 pvp=%s
+player-idle-timeout=%s
 difficulty=%s
+enable-command-block=%s
 gamemode=%s
 max-players=%s
 spawn-monsters=%s
 generate-structures=%s
 view-distance=%s
-spawn-protection=false
-motd=%s"""%(generator_settings, nether, worldName, query, flight, port, port, Map_type, rcon, seed, ip, build,
-        npc, whitelist, debug, animals, texture, snooper, hardcore, online, pvp, difficulty,
-        gamemode, max_players, monsters, structures, view, motd))
+spawn-protection=%s
+motd=%s"""%(generator_settings,oplvl, nether, worldName, query, flight, playerAchievements, port, 
+            serverName, queryPort, Map_type, rcon, rconPassword, rconPort, forceGamemode, seed, ip,
+            build, resource, npc, whitelist, animals, hardcore, snooper, online, pvp, playerTimeout,
+            difficulty, commandBlock, gamemode, max_players, monsters, structures, view,
+            spawnProtection, motd))
 
         filename = ("server.properties")
         target = open(filename, 'w')
@@ -430,7 +528,7 @@ motd=%s"""%(generator_settings, nether, worldName, query, flight, port, port, Ma
         sys.exit()
 
 def validateY_N(options):
-        while not(options.lower() != 'y' or options.lower() != 'n'):
+        while not(options.lower() == 'y' or options.lower() == 'n'):
                 if options.lower() == 'yes':
                         options = 'y'
                 elif options.lower() == 'no':
@@ -453,8 +551,19 @@ def validateT_F(options):
 
 def validate1_2(options):
         while not(options == '1' or options == '2'):
-                print server_type, "is not a valid answer"
+                print options, "is not a valid answer"
                 options = raw_input("Enter a \"1\" or a \"2\". ")
+        return options
+
+def checkSeed(seed,error):
+        for val in seed:
+                if not val.isaalpha():
+                        if int(val) < 0:
+                                print "Invalid seed please try agian"
+                                return 0, error
+        error = False
+        return seed, error
+                                
 
 main()
 
