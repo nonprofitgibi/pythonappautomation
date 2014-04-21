@@ -361,7 +361,7 @@ def generateServerSettings(worldName, whitelist, opsList):
                 while difficulty < 0 or difficulty > 3:
                         print 'Difficulty must be between 0 and 3.'
                         print 'Please try again: '
-                        difficulty = getInt()
+                        difficulty = str(getInt())
 
                 difficulty = str(difficulty)
                 #need function to check for proper input
@@ -403,26 +403,56 @@ def generateServerSettings(worldName, whitelist, opsList):
                 flight= getBool()
                 
                 print "\n\nIf unsure select true"
-                print("snooper setting.")
+                print("Snooper setting.")
                 snooper= getBool()
 
-                print "Max players?: "
+                print ("Max players?: ")
                 max_players = str(getInt())
                 #need function to check for proper input
                 #new settings need to set up q&a for them but its 2am so I'll get it tomorrow
-                oplvl="4"
-                playerAchievements="true"
-                forceGamemode = "false"
-                commandBlock = "false"
-                spwanProtection = "16"
-                rconPort = "25575"
-                queryPort = "25565"
-                rconPasword = ""
-                serverName = "Python generated server"
-                resource = ""
-                playerTimeout = "0"
-                rconPassword = ""
-                spawnProtection = "16"
+                print ("Op permission level: ")
+                oplvl= str(getInt())
+                while oplvl > 4 or oplvl < 1:
+                        print ("Op permission level can only be number 1 through 4 please try agian")
+                        oplvl = str(getInt())
+                        
+                print ("Announce player achievements?")
+                playerAchievements = getBool()
+                
+                print ("Force gamemode when logging in, default is false?")
+                forceGamemode = getBool()
+                
+                print ("Command Block, default is false")
+                commandBlock = getBool()
+                
+                print ("Spawn Protection time? Measured in minutes.")
+                spawnProtection = str(getInt())
+                #while spawnProtection > max or < min:
+                print ("Rcon port, default 25575?")
+                rconPort = str(getInt())
+                while port < 0 or port > 65535:
+                        print "Ports are between 0 and 65535 please enter a valid number"
+                        port = str(getInt())
+                
+                print ("Query port, default 25565")
+                queryPort = str(getInt())
+                while port < 0 or port > 65535:
+                        print "Ports are between 0 and 65535 please enter a valid number"
+                        port = str(getInt())
+                
+                print ("Rcon password default is blank")
+                rconPasword = raw_input()
+                #validation loop for passoword is needed
+                
+                print ("Server name?: ")
+                serverName = raw_input()
+                
+                print ("Resourse kit, default is blank: ")
+                resource = raw_input()
+                
+                print ("How long until player times out")
+                playerTimeout = str(getInt())
+                #validation loop
 
         else:
                 ##Default Minecraft server properties via http://minecraft.gamepedia.com/Server.properties as of 1/12/14
@@ -454,7 +484,7 @@ def generateServerSettings(worldName, whitelist, opsList):
                 playerAchievements="true"
                 forceGamemode = "false"
                 commandBlock = "false"
-                spwanProtection = "16"
+                spawnProtection = "16"
                 rconPort = "25575"
                 queryPort = "25565"
                 rconPasword = ""
